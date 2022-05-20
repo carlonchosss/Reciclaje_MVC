@@ -1,0 +1,177 @@
+﻿
+@{
+
+    ViewBag.Title = "RegisterUser";
+    Layout = "~/Views/Shared/_Layout_acceso.cshtml";
+}
+
+<div id="appregistro" class="d-flex flex-column flex-lg-row-fluid py-10">
+    <!--begin::Content-->
+    <div class="d-flex flex-center flex-column flex-column-fluid">
+        <!--begin::Wrapper-->
+        <div class="w-lg-600px p-10 p-lg-15 mx-auto">
+            <!--begin::Form-->
+
+            <form class="form w-100" data-vv-scope="formdatosusuario">
+                <!--begin::Heading-->
+                <div class="text-center mb-10">
+                    <!--begin::Title-->
+                    <h1 class="text-dark mb-3">Registrar Al Sistema</h1>
+                    <!--end::Title-->
+                    <!--begin::Link-->
+                    <div class="text-gray-400 fw-bold fs-4">
+                        ¿Ya tienes cuenta?
+                        <a href="/" class="link-primary fw-bolder">Ingresa Aqui</a>
+                    </div>
+                    <!--end::Link-->
+                </div>
+                <!--begin::Heading-->
+                <!--begin::Input group-->
+
+                <div class="row fv-row mb-7 fv-plugins-icon-container">
+                    <!--begin::Col-->
+                    <div class="col-xl-6">
+                        <label class="required fs-6 fw-bold mb-2">Nombres</label>
+
+                        <input id="nombre"
+                               type="text"
+                               name="nombre"
+                               placeholder="ingrese nombre"
+                               v-model="nombre"
+                               v-validate="'required|max:50'"
+                               v-bind:class="{'is-invalid': errors.has('formdatosusuario.nombre')}"
+                               class="form-control form-control-solid">
+                        <span v-show="errors.has('formdatosusuario.nombre')" class="fv-plugins-message-container invalid-feedback">{{ errors.first('formdatosusuario.nombre') }}</span>
+
+                    </div>
+                    <!--end::Col-->
+                    <!--begin::Col-->
+                    <div class="col-xl-6">
+                        <!--begin::Wrapper-->
+                        <label class="required fs-6 fw-bold mb-2">Apellidos</label>
+
+                        <input id="apellido"
+                               type="text"
+                               name="apellido"
+                               placeholder="ingrese apellido"
+                               v-model="apellido"
+                               v-validate="'required|max:50'"
+                               v-bind:class="{'is-invalid': errors.has('formdatosusuario.apellido')}"
+                               class="form-control form-control-solid">
+                        <span v-show="errors.has('formdatosusuario.apellido')" class="fv-plugins-message-container invalid-feedback">{{ errors.first('formdatosusuario.apellido') }}</span>
+                    </div>
+                    <!--end::Col-->
+                </div>
+
+                <div class="fv-row mb-7 fv-plugins-icon-container">
+
+                    <label class="form-label fw-bolder text-dark fs-6 mb-0">Correo</label>
+                    <input id="correo"
+                           type="text"
+                           name="correo"
+                           placeholder="Ingrese Correo"
+                           v-model="correo"
+                           v-validate="'required'"
+                           v-bind:class="{'is-invalid': errors.has('formdatosusuario.formdatosusuario.correo') }"
+                           class="form-control form-control-lg form-control-solid">
+                    <span v-show="errors.has('formdatosusuario.correo')" class="fv-plugins-message-container invalid-feedback">{{ errors.first('formdatosusuario.correo') }}</span>
+                </div>
+
+                <div class="row fv-row mb-7 fv-plugins-icon-container">
+                    <!--begin::Col-->
+                    <div class="col-xl-6">
+                        <label class="required fs-6 fw-bold mb-2">Celular</label>
+
+                        <input id="celular"
+                               type="text"
+                               name="celular"
+                               placeholder="ingrese celular"
+                               v-model="celular"
+                               v-validate="'numeric|max:9'"
+                               v-bind:class="{'is-invalid': errors.has('formdatosusuario.celular') }"
+                               class="form-control form-control-solid">
+                        <span v-show="errors.has('formdatosusuario.celular')" class="fv-plugins-message-container invalid-feedback">{{ errors.first('formdatosusuario.celular') }}</span>
+
+                    </div>
+                    <!--end::Col-->
+                    <!--begin::Col-->
+                    <div class="col-xl-6">
+                        <!--begin::Wrapper-->
+                        <label class="required fs-6 fw-bold mb-2">Documento</label>
+
+                        <input id="documento"
+                               type="text"
+                               name="documento"
+                               placeholder="ingrese documento"
+                               v-model="documento"
+                               v-validate="'required|numeric|max:8'"
+                               v-bind:class="{'is-invalid': errors.has('formdatosusuario.documento') }"
+                               class="form-control form-control-solid">
+                        <span v-show="errors.has('formdatosusuario.documento')" class="fv-plugins-message-container invalid-feedback">{{ errors.first('formdatosusuario.documento') }}</span>
+                    </div>
+                    <!--end::Col-->
+                </div>
+
+                <div class="row fv-row mb-7 fv-plugins-icon-container">
+                    <!--begin::Col-->
+                    <div class="col-xl-6">
+                        <label class="form-label fs-6 fw-bolder text-dark">Usuario</label>
+                        <input id="usuario"
+                               type="text"
+                               name="usuario"
+                               placeholder="Ingrese Usuario"
+                               v-model="usuario"
+                               v-validate="'required'"
+                               v-bind:class="{'is-invalid': errors.has('formdatosusuario.usuario') }"
+                               class="form-control form-control-lg form-control-solid">
+                        <span v-show="errors.has('formdatosusuario.usuario')" class="fv-plugins-message-container invalid-feedback">{{ errors.first('formdatosusuario.usuario') }}</span>
+
+                    </div>
+                    <!--end::Col-->
+                    <!--begin::Col-->
+                    <div class="col-xl-6">
+                        <!--begin::Wrapper-->
+                        <label class="form-label fw-bolder text-dark fs-6 mb-0">Contraseña</label>
+                        <input id="contrasenia"
+                               type="password"
+                               name="contrasenia"
+                               placeholder="Ingrese Contraseña"
+                               v-model="contrasenia"
+                               v-validate="'required'"
+                               v-bind:class="{'is-invalid': errors.has('formdatosusuario.contrasenia') }"
+                               class="form-control form-control-lg form-control-solid">
+                        <span v-show="errors.has('formdatosusuario.contrasenia')" class="fv-plugins-message-container invalid-feedback">{{ errors.first('formdatosusuario.contrasenia') }}</span>
+                    </div>
+                    <!--end::Col-->
+                </div>
+
+                <div class="text-center">
+                    <!--begin::Submit button-->
+                    <button type="submit" v-on:click.prevent="Registrar_Usuario()" class="btn btn-lg btn-success w-100 mb-5">Registrate</button>
+                </div>
+                <!--end::Actions-->
+            </form>
+            <!--end::Form-->
+        </div>
+        <!--end::Wrapper-->
+    </div>
+    <!--end::Content-->
+    <!--begin::Toast-->
+    <div id="kt_docs_toast_stack_container" class="toast-container position-fixed top-0 end-0 p-3 z-index-9999" style="z-index: 9999"> 
+        <div class="toast" role="alert" aria-live="assertive" aria-atomic="true" data-kt-docs-toast="stack">
+            <div class="toast-header text-white" :class="estilo_titulo">
+                <span class="svg-icon svg-icon-2 svg-icon-primary me-3">...</span>
+                <strong class="me-auto">{{texto_titulo}}</strong>
+                <small>11 mins ago</small>
+                <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close">X</button>
+            </div>
+            <div class="toast-body" :class="estilo_texto">{{texto_mensaje}}</div>
+        </div>
+    </div>
+    <!--end::Toast-->
+    <!--begin::Footer-->
+    <!--end::Footer-->
+</div>
+@section scripts {
+    <script src="~/VueJS/Modulos/RegistroUsuario.js"></script>
+}

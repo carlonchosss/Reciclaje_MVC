@@ -1,0 +1,272 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+}
+
+
+@{
+    ViewBag.Title = "Index";
+}
+<div class="content d-flex flex-column flex-column-fluid" id="kt_content">
+    <!--begin::Toolbar-->
+    @*<div class="toolbar" id="kt_toolbar">
+            <!--begin::Container-->
+            <div id="kt_toolbar_container" class="container-fluid d-flex flex-stack">
+                <!--begin::Page title-->
+                <div data-kt-swapper="true" data-kt-swapper-mode="prepend" data-kt-swapper-parent="{default: '#kt_content_container', 'lg': '#kt_toolbar_container'}" class="page-title d-flex align-items-center flex-wrap me-3 mb-5 mb-lg-0">
+                    <!--begin::Title-->
+                    <h1 class="d-flex text-dark fw-bolder fs-3 align-items-center my-1">Light Skin</h1>
+                    <!--end::Title-->
+                    <!--begin::Separator-->
+                    <span class="h-20px border-gray-300 border-start mx-4"></span>
+                    <!--end::Separator-->
+                    <!--begin::Breadcrumb-->
+                    <ul class="breadcrumb breadcrumb-separatorless fw-bold fs-7 my-1">
+                        <!--begin::Item-->
+                        <li class="breadcrumb-item text-muted">
+                            <a href="../../demo1/dist/index.html" class="text-muted text-hover-primary">Home</a>
+                        </li>
+                        <!--end::Item-->
+                        <!--begin::Item-->
+                        <li class="breadcrumb-item">
+                            <span class="bullet bg-gray-300 w-5px h-2px"></span>
+                        </li>
+                        <!--end::Item-->
+                        <!--begin::Item-->
+                        <li class="breadcrumb-item text-muted">Aside</li>
+                        <!--end::Item-->
+                        <!--begin::Item-->
+                        <li class="breadcrumb-item">
+                            <span class="bullet bg-gray-300 w-5px h-2px"></span>
+                        </li>
+                        <!--end::Item-->
+                        <!--begin::Item-->
+                        <li class="breadcrumb-item text-dark">Light Skin</li>
+                        <!--end::Item-->
+                    </ul>
+                    <!--end::Breadcrumb-->
+                </div>
+                <!--end::Page title-->
+                <!--begin::Actions-->
+                <!--end::Actions-->
+            </div>
+            <!--end::Container-->
+        </div>*@
+    <!--end::Toolbar-->
+    <!--begin::Post-->
+    <div id="appRegistroUsuarioAdmin">
+
+        <div class="post d-flex flex-column-fluid" id="kt_post">
+            <!--begin::Container-->
+            <div id="kt_content_container" class="container-xxl">
+
+                <button type="button" class="btn btn-primary" v-on:click="agregar_datos_cliente()">
+                    Agregar Productos
+                </button>
+                @*//---------------------------------*@
+                <div class="row g-5">
+
+                    @*//---------------------------------*@
+                    <div class="col-lg-7 col-md-12">
+                        <div class="card card-header-stretch card-bordered mb-5">
+                            <div class="card-header border-top p-9">
+                                <div class="card-title m-0">
+                                    <h3 class="fw-bolder m-0">Datos Personales</h3>
+                                </div>
+                            </div>
+                            <div class="card-body border-top p-9">
+                                @*<<-------->*@
+                                <table id="tabla_cliente_responsivo" class="table table-striped border rounded gy-5 gs-7">
+                                    <thead>
+                                        <tr class="fw-bolder fs-6 text-gray-800 px-7">
+                                            <th data-priority="1">ID</th>
+                                            <th data-priority="2">Descripcion</th>
+                                            <th data-priority="4">Tipo Contenedor</th>
+                                            <th data-priority="5">Estado</th>
+                                            <th data-priority="3">Accion</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr v-for="listas in listarProductos" :key="listas.codigo_producto">
+                                            <td>{{listas.codigo_producto}}</td>
+                                            <td>{{listas.descripcion_producto}}</td>
+                                            <td>{{listas.descripcion_categoria}}</td>
+                                            <td v-if="listas.habilitado ==1"><span class="badge badge-light-primary fw-bold">Habilitado</span></td>
+                                            <td v-else="listas.habilitado ==0"><span class="badge badge-light-danger fw-bold">Deshabilitado</span></td>
+                                            <td name="bstable-actions">
+                                                <div class="btn-list">
+                                                    <button id="btn_editar_cliente" type="button" class="btn btn-sm btn-primary" v-on:click="obtener_datos_cliente(listas)">
+                                                        <span class="fas fa-user-edit fs-4 me-0"> </span>
+                                                    </button>
+                                                    <button id="btn_eliminar_cliente" type="button" class="btn  btn-sm btn-danger" v-on:click="deshabilitar_datos_cliente(listas.codigo_producto)">
+                                                        <span class="fas fa-user-times fs-4 me-0"> </span>
+                                                    </button>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                </table>
+                                @*<<-------->*@
+
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                @*//---------------------------------*@
+                @*<div tabindex="-1" id="modalformularioproducto" class="modal fade show" aria-modal="true" role="dialog" style="display: block;">*@
+                <div class="modal fade" tabindex="-1" id="modalformularioproducto">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title">{{titulo_producto_modal}}</h5>
+
+                                <!--begin::Close-->
+                                <div class="btn btn-icon btn-sm btn-active-light-primary ms-2" data-bs-dismiss="modal" aria-label="Close">
+                                    <span class="svg-icon svg-icon-2x"></span>
+                                </div>
+                                <!--end::Close-->
+                            </div>
+
+                            <div class="modal-body">
+                                <form class="needs-validation" data-vv-scope="formdatosproducto">
+                                    @*<<-------->*@
+                                    <div class="row mb-12">
+                                        <div class="col-md-12 fv-row fv-plugins-icon-container">
+                                            <label class="required fs-6 fw-bold mb-2">Categoria</label>
+
+                                            <select id="categoria"
+                                                    name="categoria"
+                                                    v-model="categoria"
+                                                    v-validate="'required'"
+                                                    @*v-bind:disabled="deshabilitar_tab_deriva_jefe"*@
+                                                    v-bind:class="{'is-invalid': errors.has('formdatosproducto.categoria')}"
+                                                    class="form-select form-select-solid fw-bolder">
+                                                <option value="">--- Seleccionar ---</option>
+                                                <option v-for="opcion in listarCategorias" :value="opcion.codigo_categoria">{{opcion.descripcion_categoria}}</option>
+                                            </select>
+
+                                            <span v-show="errors.has('formdatosproducto.categoria')" class="fv-plugins-message-container invalid-feedback">{{ errors.first('formdatosproducto.categoria') }}</span>
+                                        </div>
+                                    </div>
+
+                                    @*<<-------->*@
+                                    <div class="row mb-6">
+                                        <div class="col-md-6 fv-row fv-plugins-icon-container">
+                                            <label class="required fs-6 fw-bold mb-2">Descripcion</label>
+
+                                            <input id="descripcion"
+                                                   type="text"
+                                                   name="descripcion"
+                                                   placeholder="ingrese descripcion"
+                                                   v-model="descripcion"
+                                                   v-validate="'required|max:50'"
+                                                   v-bind:class="{'is-invalid': errors.has('formdatosproducto.descripcion')}"
+                                                   class="form-control form-control-solid">
+                                            <span v-show="errors.has('formdatosproducto.descripcion')" class="fv-plugins-message-container invalid-feedback">{{ errors.first('formdatosproducto.descripcion') }}</span>
+                                        </div>
+
+                                        @*<div class="col-md-6 fv-row fv-plugins-icon-container">
+                                                <label class="required fs-6 fw-bold mb-2">Precio</label>
+
+                                                <input id="precio"
+                                                       type="text"
+                                                       name="precio"
+                                                       placeholder="ingrese precio"
+                                                       v-model="precio"
+                                                       v-validate="'required|max:50'"
+                                                       v-bind:class="{'is-invalid': errors.has('formdatosproducto.precio')}"
+                                                       class="form-control form-control-solid">
+                                                <span v-show="errors.has('formdatosproducto.precio')" class="fv-plugins-message-container invalid-feedback">{{ errors.first('formdatosproducto.precio') }}</span>
+                                            </div>*@
+                                    </div>
+                                    @*<<-------->*@
+
+                                    @*<<-------->*@
+                                    @*<div class="row mb-6">
+
+                                            <div class="col-md-6 fv-row fv-plugins-icon-container">
+                                                <label class="required fs-6 fw-bold mb-2">Unidad De Medida</label>
+
+                                                <input id="umd"
+                                                       type="text"
+                                                       name="umd"
+                                                       placeholder="ingrese Unidad De Medida"
+                                                       v-model="umd"
+                                                       v-validate="'required|number|max:50'"
+                                                       v-bind:class="{'is-invalid': errors.has('formdatosproducto.umd')}"
+                                                       class="form-control form-control-solid">
+                                                <span v-show="errors.has('formdatosproducto.umd')" class="fv-plugins-message-container invalid-feedback">{{ errors.first('formdatosproducto.umd') }}</span>
+                                            </div>
+
+                                            <div class="col-md-6 fv-row fv-plugins-icon-container">
+                                                <label class="required fs-6 fw-bold mb-2">Stock</label>
+
+                                                <input id="stock"
+                                                       type="text"
+                                                       name="stock"
+                                                       placeholder="ingrese stock"
+                                                       v-model="stock"
+                                                       v-validate="'required|number|max:50'"
+                                                       v-bind:class="{'is-invalid': errors.has('formdatosproducto.stock')}"
+                                                       class="form-control form-control-solid">
+                                                <span v-show="errors.has('formdatosproducto.stock')" class="fv-plugins-message-container invalid-feedback">{{ errors.first('formdatosproducto.stock') }}</span>
+                                            </div>
+                                        </div>*@
+                                    @*<<-------->*@
+
+                                    @*<<-------->*@
+                                    <div class="row mb-6">
+
+                                        <div class="col-md-6 fv-row fv-plugins-icon-container" v-if="codigo_producto>0">
+                                            <label class="required fs-6 fw-bold mb-2">Estado</label>
+
+                                            <div class="form-check form-switch form-check-custom form-check-solid">
+                                                <input id="estado"
+                                                       type="checkbox"
+                                                       name="estado"
+                                                       v-model="estado"
+                                                       checked="checked"
+                                                       class="form-check-input">
+                                            </div>
+                                        </div>
+                                        @*</-------->*@
+                                    </div>
+                                    @*<<-------->*@
+
+                                </form>
+                            </div>
+
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-light" data-bs-dismiss="modal" v-on:click="limpiar_campos()">Cerrar</button>
+                                <button type="submit" v-if="codigo_producto==0" v-on:click.prevent="insertar_actualizar_formulario_consumidor" class="btn btn-primary">Guardar</button>
+                                <button type="submit" v-else class="btn btn-danger" v-on:click.prevent="insertar_actualizar_formulario_consumidor">Actualizar</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!--end::Container-->
+        </div>
+
+        <!--end::Post-->
+        <!--begin::Toast-->
+        <div id="kt_docs_toast_stack_container" class="toast-container position-fixed top-0 end-0 p-3 z-index-9999" style="z-index: 9999">
+            <div class="toast" role="alert" aria-live="assertive" aria-atomic="true" data-kt-docs-toast="stack">
+                <div class="toast-header text-white" :class="estilo_titulo">
+                    <span class="svg-icon svg-icon-2 svg-icon-primary me-3">...</span>
+                    <strong class="me-auto">{{texto_titulo}}</strong>
+                    <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close">X</button>
+                </div>
+                <div class="toast-body" :class="estilo_texto">{{texto_mensaje}}</div>
+            </div>
+        </div>
+        <!--end::Toast-->
+    </div>
+</div>
+
+
+@section scripts {
+    <script src="~/VueJS/Modulos/Productos.js"></script>
+}
+

@@ -1,0 +1,100 @@
+﻿
+@{
+
+    ViewBag.Title = "Login";
+    Layout = "~/Views/Shared/_Layout_acceso.cshtml";
+}
+
+<div id="applogin" class="d-flex flex-column flex-lg-row-fluid py-10">
+    <!--begin::Content-->
+    <div class="d-flex flex-center flex-column flex-column-fluid">
+        <!--begin::Wrapper-->
+        <div class="w-lg-500px p-10 p-lg-15 mx-auto">
+            <!--begin::Form-->
+
+            <form class="form w-100" data-vv-scope="formdatosusuario">
+                <!--begin::Heading-->
+                <div class="text-center mb-10">
+                    <!--begin::Title-->
+                    <h1 class="text-dark mb-3">Ingresar Al Sistema</h1>
+                    <!--end::Title-->
+                    <!--begin::Link-->
+                    <div class="text-gray-400 fw-bold fs-4">
+                        ¿Nuevo aquí?
+                        <a href="Authentication/RegisterUser" class="link-primary fw-bolder">Crea una cuenta</a>
+                    </div>
+                    <!--end::Link-->
+                </div>
+                <!--begin::Heading-->
+                <!--begin::Input group-->
+                <div class="fv-row mb-10">
+                    <label class="form-label fs-6 fw-bolder text-dark">Usuario</label>
+                    <input id="usuario"
+                           type="text"
+                           name="usuario"
+                           placeholder="Ingrese Usuario"
+                           v-model="usuario"
+                           aria-describedby="usuario"
+                           autofocus=""
+                           tabindex="1"
+                           v-validate="'required'"
+                           v-bind:class="{'is-invalid': errors.has('formdatosusuario.usuario') }"
+                           class="form-control form-control-lg form-control-solid">
+                    <span v-show="errors.has('formdatosusuario.usuario')" class="fv-plugins-message-container invalid-feedback">{{ errors.first('formdatosusuario.usuario') }}</span>
+                </div>
+                <!--end::Input group-->
+                <!--begin::Input group-->
+                <div class="fv-row mb-10">
+
+
+                    <!--begin::Wrapper-->
+                    <div class="d-flex flex-stack mb-2">
+                        <label class="form-label fw-bolder text-dark fs-6 mb-0">Contraseña</label>
+                        @*<a href="../../demo1/dist/authentication/layouts/aside/password-reset.html" class="link-primary fs-6 fw-bolder">Forgot Password ?</a>*@
+                    </div>
+                    <input id="contrasenia"
+                           type="password"
+                           name="contrasenia"
+                           placeholder="Ingrese Contraseña"
+                           v-model="contrasenia"
+                           aria-describedby="contrasenia"
+                           autofocus=""
+                           tabindex="2"
+                           v-validate="'required'"
+                           v-bind:class="{'is-invalid': errors.has('formdatosusuario.contrasenia') }"
+                           class="form-control form-control-lg form-control-solid">
+                    <span v-show="errors.has('formdatosusuario.contrasenia')" class="fv-plugins-message-container invalid-feedback">{{ errors.first('formdatosusuario.contrasenia') }}</span>
+                </div>
+                <!--end::Input group-->
+                <!--begin::Actions-->
+
+                <div class="text-center">
+                    <!--begin::Submit button-->
+                    <button type="submit" v-on:click.prevent="iniciar_login()" class="btn btn-lg btn-success w-100 mb-5">Iniciar Sesión</button>
+                </div>
+                <!--end::Actions-->
+            </form>
+            <!--end::Form-->
+        </div>
+        <!--end::Wrapper-->
+    </div>
+    <!--end::Content-->
+    <!--begin::Toast-->
+    <div id="kt_docs_toast_stack_container" class="toast-container position-fixed top-0 end-0 p-3 z-index-9999" style="z-index: 9999"> 
+        <div class="toast" role="alert" aria-live="assertive" aria-atomic="true" data-kt-docs-toast="stack">
+            <div class="toast-header text-white" :class="estilo_titulo">
+                <span class="svg-icon svg-icon-2 svg-icon-primary me-3">...</span>
+                <strong class="me-auto">{{texto_titulo}}</strong>
+                <small>11 mins ago</small>
+                <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close">X</button>
+            </div>
+            <div class="toast-body" :class="estilo_texto">{{texto_mensaje}}</div>
+        </div>
+    </div>
+    <!--end::Toast-->
+    <!--begin::Footer-->
+    <!--end::Footer-->
+</div>
+@section scripts {
+    <script src="~/VueJS/Modulos/Login.js"></script>
+}
