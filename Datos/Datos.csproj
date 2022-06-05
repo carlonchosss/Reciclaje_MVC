@@ -48,6 +48,7 @@
     <Compile Include="Dconexion.cs" />
     <Compile Include="DAuthentication.cs" />
     <Compile Include="DProducto.cs" />
+    <Compile Include="DReciclaje.cs" />
     <Compile Include="DUsuario.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

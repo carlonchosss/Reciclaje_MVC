@@ -21,7 +21,7 @@ namespace Negocio
         public bool crear_producto(EProducto obj) => new DProducto().crear_producto(obj);
         public bool actualizar_producto(EProducto obj) => new DProducto().actualizar_producto(obj);
         public bool actualizar_estado_producto(int obj) => new DProducto().actualizar_estado_producto(obj);
-
+        public List<EProducto> listar_producto_categoria(int obj) => new DProducto().listar_producto_categoria(obj);
     }
 
 }

@@ -43,6 +43,7 @@
   <ItemGroup>
     <Compile Include="NAuthentication.cs" />
     <Compile Include="NProducto.cs" />
+    <Compile Include="NReciclaje.cs" />
     <Compile Include="NUsuario.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

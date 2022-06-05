@@ -21,6 +21,7 @@ namespace Entidad
         public DateTime? fecha_cambio_contrasenia { get; set; }
         public DateTime? fecha_creacion_registro { get; set; }
         public bool habilitado { get; set; }
+        public int puntos_acumulados { get; set; }
 
     }
 }

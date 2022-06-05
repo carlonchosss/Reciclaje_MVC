@@ -1,52 +1,52 @@
 ﻿
 @{
-    ViewBag.Title = "Index";
-}
+    ViewBag.Title = "EmpresaDescuento";}
+
 <div class="content d-flex flex-column flex-column-fluid" id="kt_content">
     <!--begin::Toolbar-->
     @*<div class="toolbar" id="kt_toolbar">
-        <!--begin::Container-->
-        <div id="kt_toolbar_container" class="container-fluid d-flex flex-stack">
-            <!--begin::Page title-->
-            <div data-kt-swapper="true" data-kt-swapper-mode="prepend" data-kt-swapper-parent="{default: '#kt_content_container', 'lg': '#kt_toolbar_container'}" class="page-title d-flex align-items-center flex-wrap me-3 mb-5 mb-lg-0">
-                <!--begin::Title-->
-                <h1 class="d-flex text-dark fw-bolder fs-3 align-items-center my-1">Light Skin</h1>
-                <!--end::Title-->
-                <!--begin::Separator-->
-                <span class="h-20px border-gray-300 border-start mx-4"></span>
-                <!--end::Separator-->
-                <!--begin::Breadcrumb-->
-                <ul class="breadcrumb breadcrumb-separatorless fw-bold fs-7 my-1">
-                    <!--begin::Item-->
-                    <li class="breadcrumb-item text-muted">
-                        <a href="../../demo1/dist/index.html" class="text-muted text-hover-primary">Home</a>
-                    </li>
-                    <!--end::Item-->
-                    <!--begin::Item-->
-                    <li class="breadcrumb-item">
-                        <span class="bullet bg-gray-300 w-5px h-2px"></span>
-                    </li>
-                    <!--end::Item-->
-                    <!--begin::Item-->
-                    <li class="breadcrumb-item text-muted">Aside</li>
-                    <!--end::Item-->
-                    <!--begin::Item-->
-                    <li class="breadcrumb-item">
-                        <span class="bullet bg-gray-300 w-5px h-2px"></span>
-                    </li>
-                    <!--end::Item-->
-                    <!--begin::Item-->
-                    <li class="breadcrumb-item text-dark">Light Skin</li>
-                    <!--end::Item-->
-                </ul>
-                <!--end::Breadcrumb-->
+            <!--begin::Container-->
+            <div id="kt_toolbar_container" class="container-fluid d-flex flex-stack">
+                <!--begin::Page title-->
+                <div data-kt-swapper="true" data-kt-swapper-mode="prepend" data-kt-swapper-parent="{default: '#kt_content_container', 'lg': '#kt_toolbar_container'}" class="page-title d-flex align-items-center flex-wrap me-3 mb-5 mb-lg-0">
+                    <!--begin::Title-->
+                    <h1 class="d-flex text-dark fw-bolder fs-3 align-items-center my-1">Light Skin</h1>
+                    <!--end::Title-->
+                    <!--begin::Separator-->
+                    <span class="h-20px border-gray-300 border-start mx-4"></span>
+                    <!--end::Separator-->
+                    <!--begin::Breadcrumb-->
+                    <ul class="breadcrumb breadcrumb-separatorless fw-bold fs-7 my-1">
+                        <!--begin::Item-->
+                        <li class="breadcrumb-item text-muted">
+                            <a href="../../demo1/dist/index.html" class="text-muted text-hover-primary">Home</a>
+                        </li>
+                        <!--end::Item-->
+                        <!--begin::Item-->
+                        <li class="breadcrumb-item">
+                            <span class="bullet bg-gray-300 w-5px h-2px"></span>
+                        </li>
+                        <!--end::Item-->
+                        <!--begin::Item-->
+                        <li class="breadcrumb-item text-muted">Aside</li>
+                        <!--end::Item-->
+                        <!--begin::Item-->
+                        <li class="breadcrumb-item">
+                            <span class="bullet bg-gray-300 w-5px h-2px"></span>
+                        </li>
+                        <!--end::Item-->
+                        <!--begin::Item-->
+                        <li class="breadcrumb-item text-dark">Light Skin</li>
+                        <!--end::Item-->
+                    </ul>
+                    <!--end::Breadcrumb-->
+                </div>
+                <!--end::Page title-->
+                <!--begin::Actions-->
+                <!--end::Actions-->
             </div>
-            <!--end::Page title-->
-            <!--begin::Actions-->
-            <!--end::Actions-->
-        </div>
-        <!--end::Container-->
-    </div>*@
+            <!--end::Container-->
+        </div>*@
     <!--end::Toolbar-->
     <!--begin::Post-->
     <div id="appRegistroUsuarioAdmin">
@@ -56,7 +56,7 @@
             <div id="kt_content_container" class="container-xxl">
 
                 <button type="button" class="btn btn-primary" v-on:click="agregar_datos_cliente()">
-                    Agregar Categoria
+                    Agregar Empresa Descuentos
                 </button>
 
                 @*//---------------------------------*@
@@ -77,14 +77,18 @@
                                         <tr class="fw-bolder fs-6 text-gray-800 px-7">
                                             <th data-priority="1">ID</th>
                                             <th data-priority="2">Descripcion</th>
+                                            <th data-priority="3">Descuento</th>
+                                            <th data-priority="4">Stock Minimo</th>
                                             <th data-priority="5">Estado</th>
-                                            <th data-priority="3">Accion</th>
+                                            <th data-priority="6">Accion</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr v-for="listas in ListarReciclajeUsuario" :key="listas.codigo_registro_reciclaje">
-                                            <td>{{listas.codigo_categoria}}</td>
-                                            <td>{{listas.descripcion_categoria}}</td>
+                                        <tr v-for="listas in listarempresadescuento" :key="listas.codigo_empresa_descuento">
+                                            <td>{{listas.codigo_empresa_descuento}}</td>
+                                            <td>{{listas.descripcion_empresa_descuento}}</td>
+                                            <td>{{listas.descuento}}%</td>
+                                            <td>{{listas.stock}}</td>
                                             <td v-if="listas.habilitado ==1"><span class="badge badge-light-primary fw-bold">Habilitado</span></td>
                                             <td v-else="listas.habilitado ==0"><span class="badge badge-light-danger fw-bold">Deshabilitado</span></td>
                                             <td name="bstable-actions">
@@ -92,7 +96,7 @@
                                                     <button id="btn_editar_cliente" type="button" class="btn btn-sm btn-primary" v-on:click="obtener_datos_cliente(listas)">
                                                         <span class="fas fa-user-edit fs-4 me-0"> </span>
                                                     </button>
-                                                    <button id="btn_eliminar_cliente" type="button" class="btn  btn-sm btn-danger" v-on:click="deshabilitar_datos_cliente(listas.codigo_categoria)">
+                                                    <button id="btn_eliminar_cliente" type="button" class="btn  btn-sm btn-danger" v-on:click="deshabilitar_datos_cliente(listas.codigo_empresa_descuento)">
                                                         <span class="fas fa-user-times fs-4 me-0"> </span>
                                                     </button>
                                                 </div>
@@ -108,7 +112,7 @@
                 </div>
                 @*//---------------------------------*@
 
-                <div class="modal fade" tabindex="-1" id="modalformulariocategoria">
+                <div class="modal fade" tabindex="-1" id="modalformularioempresadescuento">
                     <div class="modal-dialog">
                         <div class="modal-content">
                             <div class="modal-header">
@@ -122,12 +126,12 @@
                             </div>
 
                             <div class="modal-body">
-                                <form class="needs-validation" data-vv-scope="formdatoscategoria">
+                                <form class="needs-validation" data-vv-scope="formdatosempresadescuento">
 
                                     @*<<-------->*@
                                     <div class="row mb-6">
                                         <div class="col-md-6 fv-row fv-plugins-icon-container">
-                                            <label class="required fs-6 fw-bold mb-2">Descripcion</label>
+                                            <label class="required fs-6 fw-bold mb-2">Descripcion Empresa</label>
 
                                             <input id="descripcion"
                                                    type="text"
@@ -135,12 +139,39 @@
                                                    placeholder="ingrese descripcion"
                                                    v-model="descripcion"
                                                    v-validate="'required|max:50'"
-                                                   v-bind:class="{'is-invalid': errors.has('formdatoscategoria.descripcion')}"
+                                                   v-bind:class="{'is-invalid': errors.has('formdatosempresadescuento.descripcion')}"
                                                    class="form-control form-control-solid">
-                                            <span v-show="errors.has('formdatoscategoria.descripcion')" class="fv-plugins-message-container invalid-feedback">{{ errors.first('formdatoscategoria.descripcion') }}</span>
+                                            <span v-show="errors.has('formdatosempresadescuento.descripcion')" class="fv-plugins-message-container invalid-feedback">{{ errors.first('formdatosempresadescuento.descripcion') }}</span>
                                         </div>
 
-                                        <div class="col-md-6 fv-row fv-plugins-icon-container" v-if="codigo_categoria>0">
+                                        <div class="col-md-6 fv-row fv-plugins-icon-container">
+                                            <label class="required fs-6 fw-bold mb-2">Descuento</label>
+
+                                            <input id="descuento"
+                                                   type="text"
+                                                   name="descuento"
+                                                   placeholder="ingrese descuento"
+                                                   v-model="descuento"
+                                                   v-validate="'required|max:50'"
+                                                   v-bind:class="{'is-invalid': errors.has('formdatosempresadescuento.descuento')}"
+                                                   class="form-control form-control-solid">
+                                            <span v-show="errors.has('formdatosempresadescuento.descuento')" class="fv-plugins-message-container invalid-feedback">{{ errors.first('formdatosempresadescuento.descuento') }}</span>
+                                        </div>
+
+                                        <div class="col-md-6 fv-row fv-plugins-icon-container">
+                                            <label class="required fs-6 fw-bold mb-2">Cantidad Minima Descuento</label>
+
+                                            <input id="cantidad"
+                                                   type="text"
+                                                   name="cantidad"
+                                                   placeholder="ingrese cantidad"
+                                                   v-model="cantidad"
+                                                   v-validate="'required|max:50'"
+                                                   v-bind:class="{'is-invalid': errors.has('formdatosempresadescuento.cantidad')}"
+                                                   class="form-control form-control-solid">
+                                            <span v-show="errors.has('formdatosempresadescuento.cantidad')" class="fv-plugins-message-container invalid-feedback">{{ errors.first('formdatosempresadescuento.cantidad') }}</span>
+                                        </div>
+                                        <div class="col-md-6 fv-row fv-plugins-icon-container" v-if="codigo_empresa_descuento>0">
                                             <label class="required fs-6 fw-bold mb-2">Estado</label>
 
                                             <div class="form-check form-switch form-check-custom form-check-solid">
@@ -159,7 +190,7 @@
 
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-light" data-bs-dismiss="modal" v-on:click="limpiar_campos()">Cerrar</button>
-                                <button type="submit" v-if="codigo_categoria==0" v-on:click.prevent="insertar_actualizar_formulario_consumidor" class="btn btn-primary">Guardar</button>
+                                <button type="submit" v-if="codigo_empresa_descuento==0" v-on:click.prevent="insertar_actualizar_formulario_consumidor" class="btn btn-primary">Guardar</button>
                                 <button type="submit" v-else class="btn btn-danger" v-on:click.prevent="insertar_actualizar_formulario_consumidor">Actualizar</button>
                             </div>
                         </div>
@@ -190,5 +221,5 @@
 
 
 @section scripts {
-    <script src="~/VueJS/Modulos/Categorias.js"></script>
+    <script src="~/VueJS/Modulos/EmpresaDescuento.js"></script>
 }

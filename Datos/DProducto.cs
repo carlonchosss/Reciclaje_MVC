@@ -181,5 +181,27 @@ namespace Datos
             }
             return valor;
         }
+
+        public List<EProducto> listar_producto_categoria(int obj)
+        {
+            List<EProducto> obj_resultado;
+            try
+            {
+                using (SqlConnection cn = new DConexion().ConectarBD())
+                {
+                    cn.Open();
+                    obj_resultado = new List<EProducto>();
+                    var parameters = new DynamicParameters();
+                    parameters.Add("@codigo_categoria", obj);
+                    obj_resultado = cn.Query<EProducto>("listar_productos_categoria", parameters, commandType: CommandType.StoredProcedure).ToList();
+                }
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+            return obj_resultado;
+        }
+        
     }
 }

@@ -2272,11 +2272,13 @@
     <Content Include="Scripts\modernizr-2.8.3.js" />
     <Content Include="VueJS\axios.min.js" />
     <Content Include="VueJS\es.js" />
+    <Content Include="VueJS\Modulos\EmpresaDescuento.js" />
     <Content Include="VueJS\Modulos\Layoutwrapper.js" />
     <Content Include="VueJS\Modulos\Productos.js" />
     <Content Include="VueJS\Modulos\Layout.js" />
     <Content Include="VueJS\Modulos\Login.js" />
     <Content Include="VueJS\Modulos\Categorias.js" />
+    <Content Include="VueJS\Modulos\Reciclaje.js" />
     <Content Include="VueJS\Modulos\RegistroUsuario.js" />
     <Content Include="VueJS\Modulos\RegistroUsuarioAdmin.js" />
     <Content Include="VueJS\vee-validate.js" />
@@ -2301,6 +2303,7 @@
     <Content Include="Views\Cliente\Index.cshtml" />
     <Content Include="Views\Contenedor\Index.cshtml" />
     <Content Include="Views\Reciclaje\Index.cshtml" />
+    <Content Include="Views\Reciclaje\EmpresaDescuento.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
