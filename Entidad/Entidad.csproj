@@ -44,6 +44,7 @@
     <Compile Include="ECategoria.cs" />
     <Compile Include="EEmpresa_Descuento.cs" />
     <Compile Include="EMenu_Perfil.cs" />
+    <Compile Include="EPuntos_Detallados.cs" />
     <Compile Include="ERegistro_Reciclaje_Detalle.cs" />
     <Compile Include="ERegistro_Reciclaje.cs" />
     <Compile Include="EUsuario.cs" />

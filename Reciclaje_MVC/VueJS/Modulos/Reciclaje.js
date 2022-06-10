@@ -403,70 +403,6 @@
                 var vm = this;
                 vm.titulo_producto_modal = 'Nuevo Canje de Puntos';
                 vm.Listar_Empresa_Descuento_Reciclaje_cantidad();
-
-
-                //const jsPDF = require('jspdf');
-
-
-                //window.jsPDF = window.jspdf.jsPDF;
-                //var doc = window.jsPDF
-
-                //var doc = new window.jspdf.jsPDF({
-                //    orientation: 'landscape',
-                //    unit: 'mm',
-                //    format: [80, 80]
-                //})
-                //doc.setFont('courier')
-                //doc.setFontType('normal')
-                //doc.setFontSize(20)
-                //doc.text('Paranyan loves jsPDF', 35, 25)
-
-                //doc.text('Hello world!', 10, 10)
-                //doc.save('two-by-four.pdf')
-
-                var doc = new window.jspdf.jsPDF({
-                    orientation: 'portrait',
-                    unit: 'mm',
-                    format: [80, 180]
-                })
-                doc.setFont('courier')
-
-                doc.text(0, 5, '_________________________________________')
-                doc.setFontSize(10)
-                doc.text(23, 12, 'Ticket Reciclaje')
-                doc.setFontSize(10)
-
-                doc.text(0, 15, '_________________________________________')
-                doc.setFontSize(10)
-                doc.text(23, 20, 'Fecha_parametro')
-                doc.text(23, 25, 'Codigo_Ticket')
-
-                doc.text(0, 26, '_________________________________________')
-                doc.setFontSize(10)
-                doc.text(23, 30, 'Fecha_parametro')
-                doc.text(23, 35, 'Ticket Nº.' + 'Codigo_Ticket')
-
-                doc.text(0, 26, '_________________________________________')
-                doc.setFontSize(10)
-                doc.setFont('bold')
-                doc.text(10, 50, 'Fecha_parametro')
-                doc.text(10, 55, 'Ticket Nº.' + 'Codigo_Ticket')
-
-                doc.setFont('bold')
-
-                doc.text(10, 60, 'Ticket Nº.' + 'Codigo_Ticket').setFont('bold')
-                doc.text(10, 65, 'Ticket Nº.' + 'Codigo_Ticket')
-
-                doc.setFont('bold')
-                doc.text(10, 70, 'Ticket Nº.' + 'Codigo_Ticket')
-                doc.text(10, 75, 'Ticket Nº.' + 'Codigo_Ticket')
-
-                doc.setFont('Lato-Black', 'bold');
-
-                doc.text("Device: ")
-
-                doc.save('two-by-four.pdf')
-
                 $('#modalformulariocanjepuntos').modal("show");
 
             },
@@ -514,17 +450,29 @@
                         (vm.estado) ? vm.estado = 1 : vm.estado = 0;
 
                         return axios.post('/Reciclaje/guardar_puntos_descuento_reciclaje', {
-                            //objeto_reciclaje: JSON.stringify(objeto_reciclaje)
-                            dato1: vm.EmpresaDescuentoReciclajeCantidad,
-                            dato2: vm.usuario.codigo_usuario,
-                            dato3: vm.obtener_valor_combobox("EmpresaDescuentoReciclajeCantidad", vm.EmpresaDescuentoReciclajeCantidad),
+                            codigo_usuario: vm.usuario.codigo_usuario,
+                            codigo_empresa_descuento: vm.EmpresaDescuentoReciclajeCantidad.codigo_empresa_descuento,
+                            descripcion_empresa_descuento: vm.EmpresaDescuentoReciclajeCantidad.descripcion_empresa_descuento,
+                            descuento_aplicado: vm.EmpresaDescuentoReciclajeCantidad.descuento,
+                            puntos_canjeados: vm.EmpresaDescuentoReciclajeCantidad.stock,
 
+                        }, {
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'Accept': 'application/pdf'
+                            }
                         })
                             .then(function (response) {
-                                //vm.Listar_Reciclaje_Usuario();
-                                //vm.tabla_jquery_reload_mount_reciclaje();
-                                //vm.mostrar_puntos_reciclaje();
-                                //vm.registro_detalle_gestion = [];
+                                console.log(response);
+                                response.setEncoding('base64');
+
+                                const url = window.URL.createObjectURL(new Blob([response.data]));
+                                const link = document.createElement('a');
+                                link.href = url;
+                                link.setAttribute('download', 'file.pdf'); //or any other extension
+                                document.body.appendChild(link);
+                                link.click();
+
                                 $('#modalformulariocanjepuntos').modal("hide");
                                 vm.bloquar_campo = false;
                             })

@@ -245,5 +245,28 @@ namespace Datos
             }
             return valor;
         }
+        public bool guardar_puntos_descuento_reciclaje(EPuntos_Detallados obj)
+        {
+            bool valor = false;
+            try
+            {
+                using (SqlConnection cn = new DConexion().ConectarBD())
+                {
+                    cn.Open();
+                    var parameters = new DynamicParameters();
+                    parameters.Add("@codigo_empresa_descuento", obj.codigo_empresa_descuento);
+                    parameters.Add("@codigo_usuario", obj.codigo_usuario);
+                    parameters.Add("@descuento_aplicado", obj.descuento_aplicado);
+                    parameters.Add("@puntos_canjeados", obj.puntos_canjeados);
+                    valor = cn.Query<bool>("guardar_puntos_descuento_reciclaje", parameters, commandType: CommandType.StoredProcedure).SingleOrDefault();
+                }
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+            return valor;
+        }
+
     }
 }

@@ -400,7 +400,7 @@
                                                             v-bind:class="{'is-invalid': errors.has('formdatosreciclajeempresadescuento.EmpresaDescuentoReciclajeCantidad')}"
                                                             class="form-select form-select-solid fw-bolder">
                                                         <option value="">--- Seleccionar ---</option>
-                                                        <option v-for="opcion in listarEmpresaDescuentoReciclajeCantidad" :value="opcion.codigo_empresa_descuento">{{opcion.descripcion_empresa_descuento}}</option>
+                                                        <option v-for="opcion in listarEmpresaDescuentoReciclajeCantidad" :value="opcion">{{opcion.descripcion_empresa_descuento}}</option>
                                                     </select>
 
                                                     <span v-show="errors.has('formdatosreciclajeempresadescuento.EmpresaDescuentoReciclajeCantidad')" class="fv-plugins-message-container invalid-feedback">{{ errors.first('formdatosreciclajeempresadescuento.EmpresaDescuentoReciclajeCantidad') }}</span>

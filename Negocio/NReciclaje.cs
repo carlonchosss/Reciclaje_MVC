@@ -26,6 +26,8 @@ namespace Negocio
 
         #region  Puntos Reciclaje
         public int Mostrar_Puntos_Reciclaje(int codigo_usuario) => new DReciclaje().Mostrar_Puntos_Reciclaje(codigo_usuario);
+        public bool guardar_puntos_descuento_reciclaje(EPuntos_Detallados obj) => new DReciclaje().guardar_puntos_descuento_reciclaje(obj);
+
         #endregion
     }
 }
