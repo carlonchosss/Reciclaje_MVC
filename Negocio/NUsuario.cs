@@ -20,7 +20,9 @@ namespace Negocio
         public bool crear_usuario_sistema(EUsuario obj) => new DUsuario().crear_usuario_sistema(obj);
         public bool actualizar_usuario_sistema(EUsuario obj) => new DUsuario().actualizar_usuario_sistema(obj);
         public bool actualizar_estado_usuario_sistema(int obj) => new DUsuario().actualizar_estado_usuario_sistema(obj);
-
         
+        #region Perfil Usuario
+        public List<EPerfil_Usuario> Listar_Perfiles() => new DUsuario().Listar_Perfiles();
+        #endregion
     }
 }

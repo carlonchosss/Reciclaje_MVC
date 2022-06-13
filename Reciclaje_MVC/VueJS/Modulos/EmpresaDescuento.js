@@ -48,7 +48,7 @@
         mounted: function () {
             var vm = this;
             vm.Listar_Empresa_Descuento();
-            vm.tabla_jquery_reload_mount();
+            vm.Tabla_Cliente_Query_Mount_Reload();
         },
 
         methods:
@@ -73,6 +73,8 @@
                                 if (user.resultado) {
                                     vm.limpiar_campos();
                                     vm.Listar_Empresa_Descuento();
+                                    vm.Tabla_Cliente_Query_Mount_Reload();
+
                                     $('#modalformularioempresadescuento').modal("hide");
 
                                     vm.metodo_notificacion('text-success', 'bg-success', user.titulo, user.mensaje)
@@ -101,6 +103,8 @@
                                 if (user.resultado) {
                                     vm.limpiar_campos();
                                     vm.Listar_Empresa_Descuento();
+                                    vm.Tabla_Cliente_Query_Mount_Reload();
+
                                     $('#modalformularioempresadescuento').modal("hide");
 
                                     vm.metodo_notificacion('text-success', 'bg-success', user.titulo, user.mensaje)
@@ -145,6 +149,7 @@
                         console.log(error);
                     });
             },
+
             obtener_datos_cliente(datos) {
 
                 var vm = this;
@@ -174,6 +179,8 @@
                     var user = response.data;
                     if (user.resultado) {
                         vm.Listar_Empresa_Descuento();
+                        vm.Tabla_Cliente_Query_Mount_Reload();
+
                         vm.metodo_notificacion('text-success', 'bg-success', user.titulo, user.mensaje)
                     } else {
                         console.log(user)
@@ -220,14 +227,17 @@
                     }).show();
                 })
             },
-            tabla_jquery_reload_mount() {
-                //  $('#tabla_cliente_responsivos_reciclaje').DataTable().destroy();
+
+            Tabla_Cliente_Query_Mount_Reload() {
+                $('#tabla_cliente_responsivo').DataTable().destroy();
                 setTimeout(() => {
                     $("#tabla_cliente_responsivo").DataTable({
                         "language": {
                             "url": "//cdn.datatables.net/plug-ins/1.10.16/i18n/Spanish.json"
                         },
                         responsive: true,
+                        pageLength: 5,
+                        lengthMenu: [[5, 10, 25, 50, 100, -1], [5, 10, 25, 50, 100, 'Todos']],
                         "dom":
                             "<'row'" +
                             "<'col-sm-6 d-flex align-items-center justify-conten-start'l>" +
@@ -243,8 +253,7 @@
                     })
                 }, 270);
             },
-
-        }
+        },
     });
 })();
 

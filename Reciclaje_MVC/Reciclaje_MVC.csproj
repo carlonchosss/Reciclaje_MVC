@@ -132,6 +132,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\CategoriasController.cs" />
     <Compile Include="Controllers\ProductoController.cs" />
+    <Compile Include="Controllers\PuntosDescuentosController.cs" />
     <Compile Include="Controllers\ReciclajeController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -2284,6 +2285,7 @@
     <Content Include="VueJS\Modulos\Layout.js" />
     <Content Include="VueJS\Modulos\Login.js" />
     <Content Include="VueJS\Modulos\Categorias.js" />
+    <Content Include="VueJS\Modulos\PuntosDescuentos.js" />
     <Content Include="VueJS\Modulos\Reciclaje.js" />
     <Content Include="VueJS\Modulos\RegistroUsuario.js" />
     <Content Include="VueJS\Modulos\RegistroUsuarioAdmin.js" />
@@ -2310,6 +2312,7 @@
     <Content Include="Views\Contenedor\Index.cshtml" />
     <Content Include="Views\Reciclaje\Index.cshtml" />
     <Content Include="Views\Reciclaje\EmpresaDescuento.cshtml" />
+    <Content Include="Views\PuntosDescuentos\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

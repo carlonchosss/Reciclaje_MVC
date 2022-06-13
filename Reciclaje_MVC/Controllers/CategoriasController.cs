@@ -20,7 +20,6 @@ namespace Reciclaje_MVC.Controllers
         {
             return View();
         }
-
         //-------------------Metodos
         [HttpPost]
         [Route("Listar_Categorias")]
@@ -50,8 +49,34 @@ namespace Reciclaje_MVC.Controllers
                 return new JsonResult { Data = new { status = "Error - Servidor", message = ex }, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
             }
         }
+        [HttpPost]
+        [Route("Todo_Listar_Categorias")]
+        public ActionResult Todo_Listar_Categorias()
 
+        {
+            try
+            {
+                nProducto = new NProducto();
+                eCategoria = new ECategoria();
 
+                var existe_usuario = nProducto.Todo_Listar_Categorias();
+
+                if (existe_usuario.Count == 0)
+                {
+                    HttpContext.Response.StatusCode = (int)HttpStatusCode.BadRequest;
+                    return new JsonResult { Data = new { status = "Informativo", message = "No hay Datos" }, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
+                }
+                else
+                {
+                    return new JsonResult { Data = existe_usuario, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
+                }
+            }
+            catch (Exception ex)
+            {
+                HttpContext.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
+                return new JsonResult { Data = new { status = "Error - Servidor", message = ex }, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
+            }
+        }
         //-------------------Metodos
         [HttpPost]
         [Route("Registro_Categoria")]

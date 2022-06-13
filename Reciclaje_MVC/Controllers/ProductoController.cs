@@ -21,7 +21,6 @@ namespace Reciclaje_MVC.Controllers
         {
             return View();
         }
-
         //-------------------Metodos
         [HttpPost]
         [Route("Listar_Categorias")]
@@ -51,8 +50,6 @@ namespace Reciclaje_MVC.Controllers
                 return new JsonResult { Data = new { status = "Error - Servidor", message = ex }, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
             }
         }
-
-
         //-------------------Metodos
         [HttpPost]
         [Route("Listar_Producto")]
@@ -64,7 +61,36 @@ namespace Reciclaje_MVC.Controllers
                 nProducto = new NProducto();
                 eProducto = new EProducto();
 
-                var existe_usuario = nProducto.listar_producto();
+                var existe_usuario = nProducto.Listar_Producto();
+
+                if (existe_usuario.Count == 0)
+                {
+                    HttpContext.Response.StatusCode = (int)HttpStatusCode.BadRequest;
+                    return new JsonResult { Data = new { status = "Informativo", message = "No hay Datos" }, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
+                }
+                else
+                {
+                    return new JsonResult { Data = existe_usuario, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
+                }
+            }
+            catch (Exception ex)
+            {
+                HttpContext.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
+                return new JsonResult { Data = new { status = "Error - Servidor", message = ex }, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
+            }
+        }
+        //-------------------Metodos
+        [HttpPost]
+        [Route("Todo_Listar_Producto")]
+        public ActionResult Todo_Listar_Producto()
+
+        {
+            try
+            {
+                nProducto = new NProducto();
+                eProducto = new EProducto();
+
+                var existe_usuario = nProducto.Todo_Listar_Producto();
 
                 if (existe_usuario.Count == 0)
                 {

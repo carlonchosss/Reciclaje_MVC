@@ -46,26 +46,7 @@
         mounted: function () {
             var vm = this;
             vm.Listar_Categorias();
-            setTimeout(() => {
-                $("#tabla_cliente_responsivo").DataTable({
-                    "language": {
-                        "url": "//cdn.datatables.net/plug-ins/1.10.16/i18n/Spanish.json"
-                    },
-                    responsive: true,
-                    "dom":
-                        "<'row'" +
-                        "<'col-sm-6 d-flex align-items-center justify-conten-start'l>" +
-                        "<'col-sm-6 d-flex align-items-center justify-content-end'f>" +
-                        ">" +
-
-                        "<'table-responsive'tr>" +
-
-                        "<'row'" +
-                        "<'col-sm-12 col-md-5 d-flex align-items-center justify-content-center justify-content-md-start'i>" +
-                        "<'col-sm-12 col-md-7 d-flex align-items-center justify-content-center justify-content-md-end'p>" +
-                        ">"
-                })
-            }, 270);
+            vm.Tabla_Cliente_Query_Mount_Reload();
         },
 
         methods:
@@ -89,6 +70,7 @@
                                 if (user.resultado) {
                                     vm.limpiar_campos();
                                     vm.Listar_Categorias();
+                                    vm.Tabla_Cliente_Query_Mount_Reload();
                                     $('#modalformulariocategoria').modal("hide");
 
                                     vm.metodo_notificacion('text-success', 'bg-success', user.titulo, user.mensaje)
@@ -115,6 +97,7 @@
                                 if (user.resultado) {
                                     vm.limpiar_campos();
                                     vm.Listar_Categorias();
+                                    vm.Tabla_Cliente_Query_Mount_Reload()
                                     $('#modalformulariocategoria').modal("hide");
 
                                     vm.metodo_notificacion('text-success', 'bg-success', user.titulo, user.mensaje)
@@ -147,7 +130,7 @@
 
                 var vm = this;
 
-                return axios.post('/Categorias/Listar_Categorias', {
+                return axios.post('/Categorias/Todo_Listar_Categorias', {
                     params: {
                     }
                 })
@@ -184,6 +167,7 @@
                     var user = response.data;
                     if (user.resultado) {
                         vm.Listar_Categorias();
+                        vm.Tabla_Cliente_Query_Mount_Reload();
                         vm.metodo_notificacion('text-success', 'bg-success', user.titulo, user.mensaje)
                     } else {
                         console.log(user)
@@ -211,7 +195,31 @@
                 $('#modalformulariocategoria').modal("show");
 
             },
+            Tabla_Cliente_Query_Mount_Reload() {
+                $('#tabla_cliente_responsivo').DataTable().destroy();
+                setTimeout(() => {
+                    $("#tabla_cliente_responsivo").DataTable({
+                        "language": {
+                            "url": "//cdn.datatables.net/plug-ins/1.10.16/i18n/Spanish.json"
+                        },
+                        responsive: true,
+                        pageLength: 5,
+                        lengthMenu: [[5, 10, 25, 50, 100, -1], [5, 10, 25, 50, 100, 'Todos']],
+                        "dom":
+                            "<'row'" +
+                            "<'col-sm-6 d-flex align-items-center justify-conten-start'l>" +
+                            "<'col-sm-6 d-flex align-items-center justify-content-end'f>" +
+                            ">" +
 
+                            "<'table-responsive'tr>" +
+
+                            "<'row'" +
+                            "<'col-sm-12 col-md-5 d-flex align-items-center justify-content-center justify-content-md-start'i>" +
+                            "<'col-sm-12 col-md-7 d-flex align-items-center justify-content-center justify-content-md-end'p>" +
+                            ">"
+                    })
+                }, 270);
+            },
             metodo_notificacion(estilo_texto, estilo_titulo, texto_titulo, texto_mensaje) {
                 const vm = this;
                 vm.texto_titulo = texto_titulo;

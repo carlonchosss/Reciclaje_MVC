@@ -25,7 +25,7 @@ namespace Datos
                     var parameters = new DynamicParameters();
                     //parameters.Add("@usuario", obj.usuario);
                     //parameters.Add("@contrasenia", obj.contrasenia);
-                    obj_resultado = cn.Query<ECategoria>("listar_categorias", parameters, commandType: CommandType.StoredProcedure).ToList();
+                    obj_resultado = cn.Query<ECategoria>("Listar_Categorias", parameters, commandType: CommandType.StoredProcedure).ToList();
                 }
             }
             catch (Exception)
@@ -34,6 +34,28 @@ namespace Datos
             }
             return obj_resultado;
         }
+        public List<ECategoria> Todo_Listar_Categorias()
+        {
+            List<ECategoria> obj_resultado;
+            try
+            {
+                using (SqlConnection cn = new DConexion().ConectarBD())
+                {
+                    cn.Open();
+                    obj_resultado = new List<ECategoria>();
+                    var parameters = new DynamicParameters();
+                    //parameters.Add("@usuario", obj.usuario);
+                    //parameters.Add("@contrasenia", obj.contrasenia);
+                    obj_resultado = cn.Query<ECategoria>("Todo_Listar_Categorias", parameters, commandType: CommandType.StoredProcedure).ToList();
+                }
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+            return obj_resultado;
+        }
+
         public bool crear_categorias(ECategoria obj)
         {
             bool valor = false;
@@ -96,7 +118,7 @@ namespace Datos
         }
 
         //--------------------------------------------Producto
-        public List<EProducto> listar_producto()
+        public List<EProducto> Listar_Producto()
         {
             List<EProducto> obj_resultado;
             try
@@ -108,7 +130,7 @@ namespace Datos
                     var parameters = new DynamicParameters();
                     //parameters.Add("@usuario", obj.usuario);
                     //parameters.Add("@contrasenia", obj.contrasenia);
-                    obj_resultado = cn.Query<EProducto>("listar_productos", parameters, commandType: CommandType.StoredProcedure).ToList();
+                    obj_resultado = cn.Query<EProducto>("Listar_Productos", parameters, commandType: CommandType.StoredProcedure).ToList();
                 }
             }
             catch (Exception)
@@ -117,6 +139,28 @@ namespace Datos
             }
             return obj_resultado;
         }
+        public List<EProducto> Todo_Listar_Producto()
+        {
+            List<EProducto> obj_resultado;
+            try
+            {
+                using (SqlConnection cn = new DConexion().ConectarBD())
+                {
+                    cn.Open();
+                    obj_resultado = new List<EProducto>();
+                    var parameters = new DynamicParameters();
+                    //parameters.Add("@usuario", obj.usuario);
+                    //parameters.Add("@contrasenia", obj.contrasenia);
+                    obj_resultado = cn.Query<EProducto>("Todo_Listar_Productos", parameters, commandType: CommandType.StoredProcedure).ToList();
+                }
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+            return obj_resultado;
+        }
+
         public bool crear_producto(EProducto obj)
         {
             bool valor = false;

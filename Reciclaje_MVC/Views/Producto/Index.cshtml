@@ -60,19 +60,20 @@
             <!--begin::Container-->
             <div id="kt_content_container" class="container-xxl">
 
-                <button type="button" class="btn btn-primary" v-on:click="agregar_datos_cliente()">
-                    Agregar Productos
-                </button>
                 @*//---------------------------------*@
                 <div class="row g-5">
 
                     @*//---------------------------------*@
-                    <div class="col-lg-7 col-md-12">
+                    <div class="col-lg-12 col-md-12">
                         <div class="card card-header-stretch card-bordered mb-5">
                             <div class="card-header border-top p-9">
                                 <div class="card-title m-0">
-                                    <h3 class="fw-bolder m-0">Datos Personales</h3>
+                                    <h3 class="fw-bolder m-0">Datos Materiales</h3>
                                 </div>
+
+                                <button type="button" class="btn btn-primary" v-on:click="agregar_datos_cliente()">
+                                    Agregar Materiales
+                                </button>
                             </div>
                             <div class="card-body border-top p-9">
                                 @*<<-------->*@
@@ -98,7 +99,7 @@
                                                     <button id="btn_editar_cliente" type="button" class="btn btn-sm btn-primary" v-on:click="obtener_datos_cliente(listas)">
                                                         <span class="fas fa-user-edit fs-4 me-0"> </span>
                                                     </button>
-                                                    <button id="btn_eliminar_cliente" type="button" class="btn  btn-sm btn-danger" v-on:click="deshabilitar_datos_cliente(listas.codigo_producto)">
+                                                    <button v-if="listas.habilitado ==1" id="btn_eliminar_cliente" type="button" class="btn  btn-sm btn-danger" v-on:click="deshabilitar_datos_cliente(listas.codigo_producto)">
                                                         <span class="fas fa-user-times fs-4 me-0"> </span>
                                                     </button>
                                                 </div>

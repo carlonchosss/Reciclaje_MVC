@@ -245,9 +245,9 @@ namespace Datos
             }
             return valor;
         }
-        public bool guardar_puntos_descuento_reciclaje(EPuntos_Detallados obj)
+        public int guardar_puntos_descuento_reciclaje(EPuntos_Detallados obj)
         {
-            bool valor = false;
+            int valor = 0;
             try
             {
                 using (SqlConnection cn = new DConexion().ConectarBD())
@@ -258,7 +258,7 @@ namespace Datos
                     parameters.Add("@codigo_usuario", obj.codigo_usuario);
                     parameters.Add("@descuento_aplicado", obj.descuento_aplicado);
                     parameters.Add("@puntos_canjeados", obj.puntos_canjeados);
-                    valor = cn.Query<bool>("guardar_puntos_descuento_reciclaje", parameters, commandType: CommandType.StoredProcedure).SingleOrDefault();
+                    valor = cn.Query<int>("guardar_puntos_descuento_reciclaje", parameters, commandType: CommandType.StoredProcedure).SingleOrDefault();
                 }
             }
             catch (Exception)
@@ -266,6 +266,48 @@ namespace Datos
                 throw;
             }
             return valor;
+        }
+        public EPuntos_Detallados obtener_puntos_descuento_reciclaje(int codigo_detalle)
+        {
+            EPuntos_Detallados obj_resultado;
+            try
+            {
+                using (SqlConnection cn = new DConexion().ConectarBD())
+                {
+                    cn.Open();
+                    obj_resultado = new EPuntos_Detallados();
+                    var parameters = new DynamicParameters();
+                    parameters.Add("@codigo_detalle", codigo_detalle);
+                    //parameters.Add("@contrasenia", obj.contrasenia);
+                    obj_resultado = cn.Query<EPuntos_Detallados>("obtener_puntos_descuento_reciclaje", parameters, commandType: CommandType.StoredProcedure).SingleOrDefault();
+                }
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+            return obj_resultado;
+        }
+        public List<EPuntos_Detallados> listar_puntos_descuento_usuario(int codigo_usuario)
+        {
+            List < EPuntos_Detallados> obj_resultado;
+            try
+            {
+                using (SqlConnection cn = new DConexion().ConectarBD())
+                {
+                    cn.Open();
+                    obj_resultado = new List<EPuntos_Detallados>();
+                    var parameters = new DynamicParameters();
+                    parameters.Add("@codigo_usuario", codigo_usuario);
+                    //parameters.Add("@contrasenia", obj.contrasenia);
+                    obj_resultado = cn.Query<EPuntos_Detallados>("listar_puntos_descuento_reciclaje", parameters, commandType: CommandType.StoredProcedure).ToList();
+                }
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+            return obj_resultado;
         }
 
     }

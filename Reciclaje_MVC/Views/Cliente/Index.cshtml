@@ -6,48 +6,48 @@
 <div class="content d-flex flex-column flex-column-fluid" id="kt_content">
     <!--begin::Toolbar-->
     @*<div class="toolbar" id="kt_toolbar">
-        <!--begin::Container-->
-        <div id="kt_toolbar_container" class="container-fluid d-flex flex-stack">
-            <!--begin::Page title-->
-            <div data-kt-swapper="true" data-kt-swapper-mode="prepend" data-kt-swapper-parent="{default: '#kt_content_container', 'lg': '#kt_toolbar_container'}" class="page-title d-flex align-items-center flex-wrap me-3 mb-5 mb-lg-0">
-                <!--begin::Title-->
-                <h1 class="d-flex text-dark fw-bolder fs-3 align-items-center my-1">Light Skin</h1>
-                <!--end::Title-->
-                <!--begin::Separator-->
-                <span class="h-20px border-gray-300 border-start mx-4"></span>
-                <!--end::Separator-->
-                <!--begin::Breadcrumb-->
-                <ul class="breadcrumb breadcrumb-separatorless fw-bold fs-7 my-1">
-                    <!--begin::Item-->
-                    <li class="breadcrumb-item text-muted">
-                        <a href="../../demo1/dist/index.html" class="text-muted text-hover-primary">Home</a>
-                    </li>
-                    <!--end::Item-->
-                    <!--begin::Item-->
-                    <li class="breadcrumb-item">
-                        <span class="bullet bg-gray-300 w-5px h-2px"></span>
-                    </li>
-                    <!--end::Item-->
-                    <!--begin::Item-->
-                    <li class="breadcrumb-item text-muted">Aside</li>
-                    <!--end::Item-->
-                    <!--begin::Item-->
-                    <li class="breadcrumb-item">
-                        <span class="bullet bg-gray-300 w-5px h-2px"></span>
-                    </li>
-                    <!--end::Item-->
-                    <!--begin::Item-->
-                    <li class="breadcrumb-item text-dark">Light Skin</li>
-                    <!--end::Item-->
-                </ul>
-                <!--end::Breadcrumb-->
+            <!--begin::Container-->
+            <div id="kt_toolbar_container" class="container-fluid d-flex flex-stack">
+                <!--begin::Page title-->
+                <div data-kt-swapper="true" data-kt-swapper-mode="prepend" data-kt-swapper-parent="{default: '#kt_content_container', 'lg': '#kt_toolbar_container'}" class="page-title d-flex align-items-center flex-wrap me-3 mb-5 mb-lg-0">
+                    <!--begin::Title-->
+                    <h1 class="d-flex text-dark fw-bolder fs-3 align-items-center my-1">Light Skin</h1>
+                    <!--end::Title-->
+                    <!--begin::Separator-->
+                    <span class="h-20px border-gray-300 border-start mx-4"></span>
+                    <!--end::Separator-->
+                    <!--begin::Breadcrumb-->
+                    <ul class="breadcrumb breadcrumb-separatorless fw-bold fs-7 my-1">
+                        <!--begin::Item-->
+                        <li class="breadcrumb-item text-muted">
+                            <a href="../../demo1/dist/index.html" class="text-muted text-hover-primary">Home</a>
+                        </li>
+                        <!--end::Item-->
+                        <!--begin::Item-->
+                        <li class="breadcrumb-item">
+                            <span class="bullet bg-gray-300 w-5px h-2px"></span>
+                        </li>
+                        <!--end::Item-->
+                        <!--begin::Item-->
+                        <li class="breadcrumb-item text-muted">Aside</li>
+                        <!--end::Item-->
+                        <!--begin::Item-->
+                        <li class="breadcrumb-item">
+                            <span class="bullet bg-gray-300 w-5px h-2px"></span>
+                        </li>
+                        <!--end::Item-->
+                        <!--begin::Item-->
+                        <li class="breadcrumb-item text-dark">Light Skin</li>
+                        <!--end::Item-->
+                    </ul>
+                    <!--end::Breadcrumb-->
+                </div>
+                <!--end::Page title-->
+                <!--begin::Actions-->
+                <!--end::Actions-->
             </div>
-            <!--end::Page title-->
-            <!--begin::Actions-->
-            <!--end::Actions-->
-        </div>
-        <!--end::Container-->
-    </div>*@
+            <!--end::Container-->
+        </div>*@
     <!--end::Toolbar-->
     <!--begin::Post-->
     <div id="appRegistroUsuarioAdmin">
@@ -56,9 +56,6 @@
             <!--begin::Container-->
             <div id="kt_content_container" class="container-xxl">
 
-                <button type="button" class="btn btn-primary" v-on:click="agregar_datos_cliente()">
-                    Agregar Cliente
-                </button>
 
                 @*//---------------------------------*@
                 <div class="row g-5">
@@ -68,8 +65,11 @@
                         <div class="card card-header-stretch card-bordered mb-5">
                             <div class="card-header border-top p-9">
                                 <div class="card-title m-0">
-                                    <h3 class="fw-bolder m-0">Datos Personales</h3>
+                                    <h3 class="fw-bolder m-0">Datos Cliente</h3>
                                 </div>
+                                <button type="button" class="btn btn-primary" v-on:click="agregar_datos_cliente()">
+                                    Agregar Cliente
+                                </button>
                             </div>
                             <div class="card-body border-top p-9">
                                 @*<<-------->*@
@@ -78,7 +78,7 @@
                                         <tr class="fw-bolder fs-6 text-gray-800 px-7">
                                             <th data-priority="1">ID</th>
                                             <th data-priority="2">Nombre Completos</th>
-                                            <th data-priority="6">Correo</th>
+                                            <th data-priority="6">Perfil</th>
                                             <th data-priority="7">Celular</th>
                                             <th data-priority="4">Usuario</th>
                                             <th data-priority="5">Estado</th>
@@ -86,10 +86,14 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr v-for="listas in listarUsuarios" :key="listas.codigo_usuario">
-                                            <td>{{listas.codigo_usuario}}</td>
+                                        <tr v-for="(listas, index) in listarUsuarios" :key="listas.codigo_usuario">
+                                            @*<td>{{listas.codigo_usuario}}</td>*@
+                                            <th>{{index + 1}}</th>
                                             <td>{{listas.nombre}} {{listas.apellido}}</td>
-                                            <td>{{listas.correo_electronico}}</td>
+                                            @*<td>{{listas.correo_electronico}}</td>*@
+                                            <td v-if="listas.codigo_perfil_usuario ==1"><span class="badge badge-light-primary fw-bold">Administrador</span></td>
+                                            <td v-else-if="listas.codigo_perfil_usuario ==2"><span class="badge badge-light-dark fw-bold">Usuario</span></td>
+                                            <td v-else="listas.codigo_perfil_usuario ==0"><span class="badge badge-light-danger fw-bold">Por Asignar</span></td>
                                             <td>{{listas.celular}}</td>
                                             <td>{{listas.usuario}}</td>
                                             <td v-if="listas.habilitado ==1"><span class="badge badge-light-primary fw-bold">Habilitado</span></td>
@@ -99,7 +103,7 @@
                                                     <button id="btn_editar_cliente" type="button" class="btn btn-sm btn-primary" v-on:click="obtener_datos_cliente(listas)">
                                                         <span class="fas fa-user-edit fs-4 me-0"> </span>
                                                     </button>
-                                                    <button id="btn_eliminar_cliente" type="button" class="btn  btn-sm btn-danger" v-on:click="deshabilitar_datos_cliente(listas.codigo_usuario)">
+                                                    <button v-if="listas.habilitado ==1" id="btn_eliminar_cliente" type="button" class="btn  btn-sm btn-danger" v-on:click="deshabilitar_datos_cliente(listas.codigo_usuario)">
                                                         <span class="fas fa-user-times fs-4 me-0"> </span>
                                                     </button>
                                                 </div>
@@ -242,6 +246,25 @@
                                                 <span v-show="errors.has('formdatosusuario.contrasenia')" class="fv-plugins-message-container invalid-feedback">{{ errors.first('formdatosusuario.contrasenia') }}</span>
                                             </div>
                                         </div>
+                                        @*<<-------->*@
+                                        <div class="row mb-6">
+                                            <div class="col-md-12 fv-row fv-plugins-icon-container">
+                                                <label class="required fs-6 fw-bold mb-2">Perfil Usuario</label>
+
+                                                <select id="Perfil_Usuario"
+                                                        name="Perfil_Usuario"
+                                                        v-model="Perfil_Usuario"
+                                                        v-validate="'required'"
+                                                        @*v-bind:disabled="deshabilitar_tab_deriva_jefe"*@
+                                                        v-bind:class="{'is-invalid': errors.has('formdatosusuario.Perfil_Usuario')}"
+                                                        class="form-select form-select-solid fw-bolder">
+                                                    <option value="">--- Seleccionar ---</option>
+                                                    <option v-for="opcion in ListarPerfiles" :value="opcion.codigo_perfil_usuario">{{opcion.descripcion_perfil_usuario}}</option>
+                                                </select>
+
+                                                <span v-show="errors.has('formdatosusuario.Perfil_Usuario')" class="fv-plugins-message-container invalid-feedback">{{ errors.first('formdatosusuario.Perfil_Usuario') }}</span>
+                                            </div>
+                                        </div>
                                         @*</-------->*@
                                         @*<<-------->*@
                                         <div class="row mb-6">
@@ -278,7 +301,7 @@
 
         <!--end::Post-->
         <!--begin::Toast-->
-        <div id="kt_docs_toast_stack_container" class="toast-container position-fixed top-0 end-0 p-3 z-index-9999" style="z-index: 9999"> 
+        <div id="kt_docs_toast_stack_container" class="toast-container position-fixed top-0 end-0 p-3 z-index-9999" style="z-index: 9999">
             <div class="toast" role="alert" aria-live="assertive" aria-atomic="true" data-kt-docs-toast="stack">
                 <div class="toast-header text-white" :class="estilo_titulo">
                     <span class="svg-icon svg-icon-2 svg-icon-primary me-3">...</span>

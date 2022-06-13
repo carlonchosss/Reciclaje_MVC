@@ -177,5 +177,44 @@ namespace Reciclaje_MVC.Controllers
                 return new JsonResult { Data = new { status = "Error - Servidor", message = ex }, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
             }
         }
+
+        //vistas
+        // GET: Perfil_Sistema
+        public ActionResult Perfil_Sistema()
+        {
+            return View();
+        }
+        #region Perfil Usuario
+
+        //-------------------Metodos
+        [HttpPost]
+        [Route("Listar_Usuarios")]
+        public ActionResult Listar_Perfiles()
+
+        {
+            try
+            {
+                nUsuario = new NUsuario();
+
+                var Listar_Perfiles = nUsuario.Listar_Perfiles();
+
+                if (Listar_Perfiles.Count == 0)
+                {
+                    HttpContext.Response.StatusCode = (int)HttpStatusCode.BadRequest;
+                    return new JsonResult { Data = new { status = "Informativo", message = "No hay Datos" }, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
+                }
+                else
+                {
+                    return new JsonResult { Data = Listar_Perfiles, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
+                }
+            }
+            catch (Exception ex)
+            {
+                nUsuario = new NUsuario();
+                HttpContext.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
+                return new JsonResult { Data = new { status = "Error - Servidor", message = ex }, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
+            }
+        }
+        #endregion
     }
 }

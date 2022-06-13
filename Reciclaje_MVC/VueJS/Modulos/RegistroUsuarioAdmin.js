@@ -38,6 +38,7 @@
             estado: 1,
             usuario: '',
             contrasenia: '',
+            Perfil_Usuario: '',
             titulo_usuario_modal: '',
 
             error: 'aa',
@@ -49,6 +50,7 @@
             texto_mensaje: 'aca va tu subtitulo',
             //listas
             listarUsuarios: [],
+            ListarPerfiles:[],
             obtener_datos_usuario: [],
         }),
 
@@ -60,27 +62,8 @@
         mounted: function () {
             var vm = this;
             vm.Listar_Usuario();
-            setTimeout(() => {
-                $("#tabla_cliente_responsivo").DataTable({
-                    "language": {
-                        "url": "//cdn.datatables.net/plug-ins/1.10.16/i18n/Spanish.json"
-                    },
-                    responsive: true,
-                    "dom":
-                        "<'row'" +
-                        "<'col-sm-6 d-flex align-items-center justify-conten-start'l>" +
-                        "<'col-sm-6 d-flex align-items-center justify-content-end'f>" +
-                        ">" +
-
-                        "<'table-responsive'tr>" +
-
-                        "<'row'" +
-                        "<'col-sm-12 col-md-5 d-flex align-items-center justify-content-center justify-content-md-start'i>" +
-                        "<'col-sm-12 col-md-7 d-flex align-items-center justify-content-center justify-content-md-end'p>" +
-                        ">"
-                })
-            }, 270);
-
+            vm.Tabla_Cliente_Query_Mount_Reload();
+            vm.Listar_Perfiles();
             //vm.metodo_notificacion('text-danger', 'bg-danger', 'titulo', 'hola mundo')
             //var toastElList = [].slice.call(document.querySelectorAll('.toast'))
             //var toastList = toastElList.map(function (toastEl) {
@@ -111,8 +94,8 @@
                                 numero_documento: vm.documento,
                                 correo_electronico: vm.correo,
                                 usuario: vm.usuario,
-                                contrasenia: vm.contrasenia
-                                // codigo_perfil_usuario: vm.perfil,
+                                contrasenia: vm.contrasenia,
+                                codigo_perfil_usuario: vm.Perfil_Usuario,
 
                             }).then(function (response) {
                                 console.log(response.data);
@@ -120,6 +103,8 @@
                                 if (user.resultado) {
                                     vm.limpiar_campos();
                                     vm.Listar_Usuario();
+                                    vm.Tabla_Cliente_Query_Mount_Reload();
+
                                     $('#modalformulariousuario').modal("hide");
                                     vm.metodo_notificacion('text-success', 'bg-success', user.titulo, user.mensaje)
                                 } else {
@@ -142,8 +127,8 @@
                                 usuario: vm.usuario,
                                 habilitado: vm.estado,
                                 contrasenia: vm.contrasenia,
-                                codigo_usuario: vm.codigo_usuario
-                                // codigo_perfil_usuario: vm.perfil,
+                                codigo_usuario: vm.codigo_usuario,
+                                codigo_perfil_usuario: vm.Perfil_Usuario,
 
                             }).then(function (response) {
                                 console.log(response.data);
@@ -151,6 +136,8 @@
                                 if (user.resultado) {
                                     vm.limpiar_campos();
                                     vm.Listar_Usuario();
+                                    vm.Tabla_Cliente_Query_Mount_Reload();
+
                                     $('#modalformulariousuario').modal("hide");
                                     vm.metodo_notificacion('text-success', 'bg-success', user.titulo, user.mensaje)
                                 } else {
@@ -194,7 +181,22 @@
                         console.log(error);
                     });
             },
+            Listar_Perfiles() {
 
+                var vm = this;
+
+                return axios.post('/Cliente/Listar_Perfiles', {
+                    params: {
+                    }
+                })
+                    .then(function (response) {
+                        vm.ListarPerfiles = response.data;
+
+                    })
+                    .catch(function (error) {
+                        console.log(error);
+                    });
+            },
             agregar_datos_cliente(valor) {
                 var vm = this;
                 vm.limpiar_campos();
@@ -212,8 +214,8 @@
                 vm.apellido = datos.apellido;
                 vm.celular = datos.celular;
                 vm.documento = datos.numero_documento;
-                vm.correo = datos.correo_electronico;
-                vm.perfil_usuario = datos.codigo_perfil_usuario;
+                vm.correo = datos.correo_electronico;           
+                vm.Perfil_Usuario = (datos.codigo_perfil_usuario == 0) ? datos.codigo_perfil_usuario = "" : datos.codigo_perfil_usuario;
                 vm.usuario = datos.usuario;
                 vm.contrasenia = datos.contrasenia
                 vm.estado = (datos.habilitado) ? datos.habilitado = 1 : datos.habilitado = 0;
@@ -230,10 +232,10 @@
                 vm.celular = '';
                 vm.documento = '';
                 vm.correo = '';
-                vm.perfil_usuario = '';
                 vm.estado = 1;
                 vm.usuario = '';
                 vm.contrasenia = '';
+                vm.Perfil_Usuario = '';
             },
 
             deshabilitar_datos_cliente(codigo_usuario) {
@@ -248,6 +250,7 @@
                     var user = response.data;
                     if (user.resultado) {
                         vm.Listar_Usuario();
+                        vm.Tabla_Cliente_Query_Mount_Reload();
                         vm.metodo_notificacion('text-success', 'bg-success', user.titulo, user.mensaje)
                     } else {
                         console.log(user)
@@ -258,6 +261,31 @@
                         }
                     }
                 });
+            },
+            Tabla_Cliente_Query_Mount_Reload() {
+                $('#tabla_cliente_responsivo').DataTable().destroy();
+                setTimeout(() => {
+                    $("#tabla_cliente_responsivo").DataTable({
+                        "language": {
+                            "url": "//cdn.datatables.net/plug-ins/1.10.16/i18n/Spanish.json"
+                        },
+                        responsive: true,
+                        pageLength: 5,
+                        lengthMenu: [[5, 10, 25, 50, 100, -1], [5, 10, 25, 50, 100, 'Todos']],
+                        "dom":
+                            "<'row'" +
+                            "<'col-sm-6 d-flex align-items-center justify-conten-start'l>" +
+                            "<'col-sm-6 d-flex align-items-center justify-content-end'f>" +
+                            ">" +
+
+                            "<'table-responsive'tr>" +
+
+                            "<'row'" +
+                            "<'col-sm-12 col-md-5 d-flex align-items-center justify-content-center justify-content-md-start'i>" +
+                            "<'col-sm-12 col-md-7 d-flex align-items-center justify-content-center justify-content-md-end'p>" +
+                            ">"
+                    })
+                }, 270);
             },
             metodo_notificacion(estilo_texto, estilo_titulo, texto_titulo, texto_mensaje) {
                 const vm = this;

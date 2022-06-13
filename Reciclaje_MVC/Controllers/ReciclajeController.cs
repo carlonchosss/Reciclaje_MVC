@@ -398,27 +398,17 @@ namespace Reciclaje_MVC.Controllers
 
                 var crear_usuario = nReciclaje.guardar_puntos_descuento_reciclaje(obj);
 
-                if (crear_usuario)
+                if (crear_usuario != 0)
                 {
-                    var fexportado = formato_pdf_exportado_reciclaje_canjeado(obj);
+                    var obj_pdf = nReciclaje.obtener_puntos_descuento_reciclaje(crear_usuario);
 
-                    //FileStreamResult respuesta = File(fexportado, "application/pdf");
-                    var inputAsString = Convert.ToBase64String(fexportado.ToArray());
+                    var fexportado = formato_pdf_exportado_reciclaje_canjeado(obj_pdf);
 
-                    //Byte[] bytes2 = Convert.FromBase64String(respuesta);
+                    var nombrepdfs = obj_pdf.numero_documento + "_" + DateTime.Now.ToString("ddMMyyy_hhmmss");
 
-                   // var docBytes = System.IO.File.ReadAllBytes(fexportado);
-                    string docBase64 = "data:application/pdf;base64," + inputAsString;
-                    return new JsonResult { Data =  docBase64, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
+                    return new JsonResult { Data = new { resultado = true, titulo = "Éxito", nombrepdf = nombrepdfs, base64 = fexportado }, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
                 }
-                // return  File(fexportado, "application/pdf","archivo.pdf");
-                // return File(memoryStream, "application/pdf");
-                // return new JsonResult { Data = valorcito,
-                //     ContentType = "application/pdf",
-                //      JsonRequestBehavior = JsonRequestBehavior.AllowGet };
-               // return new JsonResult { Data = respuesta, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
-                    // return new JsonResult { Data = new { resultado = true, titulo = "Éxito", mensaje = "Puntos Descuento Creado Correctamente" }, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
-                
+
                 else
                 {
                     return new JsonResult { Data = new { resultado = false, codigo_error = 1, errortitulo = "Error", mensaje = "No Se Creo Puntos Descuento" }, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
@@ -448,89 +438,59 @@ namespace Reciclaje_MVC.Controllers
             }
         }
 
-
-        /// [HttpPost]
-        [Route("exportar_pdf_reciclaje_cliente_puntos")]
-        //public ActionResult exportar_pdf_reciclaje_cliente_puntos(int codigo_usuario)
-        public ActionResult exportar_pdf_reciclaje_cliente_puntos()
+        //-------------------Metodos
+        [HttpPost]
+        [Route("obtener_puntos_descuento_reciclaje")]
+        public ActionResult obtener_puntos_descuento_reciclaje(int codigo_detalle)
 
         {
-            Document doc = new Document();
+            try
+            {
+                nReciclaje = new NReciclaje();
+                ePuntos_Detallados = new EPuntos_Detallados();
 
-            //se utiliza medida points
-            // doc.SetPageSize(PageSize.A4);
-            doc.SetPageSize(new Rectangle(226.772f, 326.772f));
+                var obj_pdf = nReciclaje.obtener_puntos_descuento_reciclaje(codigo_detalle);
 
-            // doc.SetMargins(226.772f, 226.772f, 226.772f, 226.772f);
-            MemoryStream memoryStream = new MemoryStream();
-            PdfWriter writer = PdfWriter.GetInstance(doc, memoryStream);
-            doc.AddAuthor("CJG - ECL");
-            doc.AddTitle("PDF_PRUEBA");
-            doc.Open();
+                if (obj_pdf != null)
+                {
+                    var pdf_exportado = formato_pdf_exportado_reciclaje_canjeado(obj_pdf);
 
+                    var nombre_pdfs = obj_pdf.numero_documento + "_" + DateTime.Now.ToString("ddMMyyy_hhmmss");
 
-            //base de titulo
-            BaseFont base_titulo = BaseFont.CreateFont(BaseFont.COURIER, BaseFont.CP1250, true);
-            Font titulo_fuente = new Font(base_titulo, 9f, Font.BOLD, BaseColor.BLACK);
+                    return new JsonResult { Data = new { resultado = true, titulo = "Éxito", nombrepdf = nombre_pdfs, base64 = pdf_exportado }, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
+                }
 
-            BaseFont base_sub_titulo = BaseFont.CreateFont(BaseFont.COURIER, BaseFont.CP1250, true);
-            Font sub_titulo_fuente = new Font(base_sub_titulo, 7f, Font.BOLD, BaseColor.BLACK);
+                else
+                {
+                    return new JsonResult { Data = new { resultado = false, codigo_error = 1, errortitulo = "Error", mensaje = "No Se pudo Exportar Puntos Descuento" }, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
+                }
+            }
+            catch (Exception ex)
+            {
+                //nUsuario.insertar_log_error(new ELog_error()
+                //{
+                //    url_error = "Autenticacion/Loguin",
+                //    descripcion_error = "Web externa RRHH: " + ex.Message
+                //});
 
-            BaseFont base_titulo_tabla = BaseFont.CreateFont(BaseFont.COURIER, BaseFont.CP1250, true);
-            Font titulo_tabla_fuente = new Font(base_titulo_tabla, 7f, Font.BOLD, BaseColor.BLACK);
-
-            BaseFont base_parrafo = BaseFont.CreateFont(BaseFont.COURIER, BaseFont.CP1250, true);
-            Font parrafo_fuente = new Font(base_parrafo, 7f, Font.NORMAL, BaseColor.BLACK);
-
-            BaseFont base_detalle = BaseFont.CreateFont(BaseFont.COURIER, BaseFont.CP1250, true);
-            Font detalle_fuente = new Font(base_detalle, 7f, Font.NORMAL, BaseColor.BLACK);
-
-            string ruta_clave_privada_SSH = System.IO.Path.Combine(System.AppDomain.CurrentDomain.BaseDirectory + "assets\\media\\reciclaje\\", "logo_sin_texto_color.png");
-
-            Image img = Image.GetInstance(ruta_clave_privada_SSH);
-            img.ScalePercent(15f);
-
-            //aca se esta dando el tamaño de la tabla y el procentaje de la hoja
-            var tabla = new PdfPTable(new float[] { 100f }) { WidthPercentage = 100 };
-            tabla.AddCell(new PdfPCell(new Phrase("Sistema de reciclaje", titulo_fuente)) { Border = 0, HorizontalAlignment = Element.ALIGN_CENTER, VerticalAlignment = Element.ALIGN_CENTER });
-            tabla.AddCell(new PdfPCell(img) { Border = 0, HorizontalAlignment = Element.ALIGN_CENTER, VerticalAlignment = Element.ALIGN_CENTER });
-            doc.Add(tabla);
-
-            tabla = new PdfPTable(new float[] { 50f, 50f }) { WidthPercentage = 100 };
-
-            tabla.AddCell(new PdfPCell(new Phrase("Ticket De Descuento", sub_titulo_fuente)) { Border = 0, HorizontalAlignment = Element.ALIGN_CENTER, VerticalAlignment = Element.ALIGN_CENTER, Colspan = 2 });
-            tabla.AddCell(new PdfPCell(new Phrase("Cod. Ticket:", sub_titulo_fuente)) { Border = 0, HorizontalAlignment = Element.ALIGN_LEFT });
-            tabla.AddCell(new PdfPCell(new Phrase("1111", parrafo_fuente)) { Border = 0, HorizontalAlignment = Element.ALIGN_MIDDLE });
-
-            tabla.AddCell(new PdfPCell(new Phrase("Cod. Cliente:", sub_titulo_fuente)) { Border = 0, HorizontalAlignment = Element.ALIGN_LEFT });
-            tabla.AddCell(new PdfPCell(new Phrase("1111", parrafo_fuente)) { Border = 0, HorizontalAlignment = Element.ALIGN_MIDDLE });
-
-            tabla.AddCell(new PdfPCell(new Phrase("Fecha/Hora:", sub_titulo_fuente)) { Border = 0, HorizontalAlignment = Element.ALIGN_LEFT });
-            tabla.AddCell(new PdfPCell(new Phrase(DateTime.Now.ToString("dd/MM/yyy hh:mm"), parrafo_fuente)) { Border = 0, HorizontalAlignment = Element.ALIGN_MIDDLE });
-            doc.Add(tabla);
-
-            doc.Add(new Paragraph(" "));
-
-            //columna
-            tabla = new PdfPTable(new float[] { 50f, 50f, 50f }) { WidthPercentage = 100 };
-            tabla.AddCell(new PdfPCell(new Phrase("Cantidad", titulo_tabla_fuente)) { Border = 0, HorizontalAlignment = Element.ALIGN_MIDDLE });
-            tabla.AddCell(new PdfPCell(new Phrase("Descripcion", titulo_tabla_fuente)) { Border = 0, HorizontalAlignment = Element.ALIGN_MIDDLE });
-            tabla.AddCell(new PdfPCell(new Phrase("Descuento", titulo_tabla_fuente)) { Border = 0, HorizontalAlignment = Element.ALIGN_MIDDLE });
-
-            //detalle
-            tabla.AddCell(new PdfPCell(new Phrase("1", parrafo_fuente)) { Border = 0, HorizontalAlignment = Element.ALIGN_MIDDLE });
-            tabla.AddCell(new PdfPCell(new Phrase("BIMBO", parrafo_fuente)) { Border = 0, HorizontalAlignment = Element.ALIGN_MIDDLE });
-            tabla.AddCell(new PdfPCell(new Phrase("20%", parrafo_fuente)) { Border = 0, HorizontalAlignment = Element.ALIGN_MIDDLE });
-            doc.Add(tabla);
-
-            writer.CloseStream = false;
-            doc.Close();
-            memoryStream.Position = 0;
-            return File(memoryStream, "application/pdf");
+                //obj_resultado = new EResultado_transaccion();
+                //obj_resultado.idrespuesta = 0;
+                //obj_resultado.descripcion = "Ocurrió un error al iniciar sesión";
+                HttpContext.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
+                return new JsonResult
+                {
+                    Data = new
+                    {
+                        status = "Error - Servidor",
+                        message = ex
+                    },
+                    JsonRequestBehavior = JsonRequestBehavior.AllowGet
+                };
+            }
         }
 
 
-        public MemoryStream formato_pdf_exportado_reciclaje_canjeado(EPuntos_Detallados puntos_datos)
+        public string formato_pdf_exportado_reciclaje_canjeado(EPuntos_Detallados puntos_datos)
         {
             Document doc = new Document();
 
@@ -542,9 +502,8 @@ namespace Reciclaje_MVC.Controllers
             MemoryStream memoryStream = new MemoryStream();
             PdfWriter writer = PdfWriter.GetInstance(doc, memoryStream);
             doc.AddAuthor("CJG - ECL");
-            doc.AddTitle("PDF_PRUEBA");
+            doc.AddTitle(puntos_datos.numero_documento);
             doc.Open();
-
 
             //base de titulo
             BaseFont base_titulo = BaseFont.CreateFont(BaseFont.COURIER, BaseFont.CP1250, true);
@@ -582,8 +541,11 @@ namespace Reciclaje_MVC.Controllers
             tabla.AddCell(new PdfPCell(new Phrase("Cod. Cliente:", sub_titulo_fuente)) { Border = 0, HorizontalAlignment = Element.ALIGN_LEFT });
             tabla.AddCell(new PdfPCell(new Phrase(puntos_datos.codigo_usuario.ToString(), parrafo_fuente)) { Border = 0, HorizontalAlignment = Element.ALIGN_MIDDLE });
 
+            tabla.AddCell(new PdfPCell(new Phrase("Num. Doc:", sub_titulo_fuente)) { Border = 0, HorizontalAlignment = Element.ALIGN_LEFT });
+            tabla.AddCell(new PdfPCell(new Phrase(puntos_datos.numero_documento.ToString(), parrafo_fuente)) { Border = 0, HorizontalAlignment = Element.ALIGN_MIDDLE });
+
             tabla.AddCell(new PdfPCell(new Phrase("Fecha/Hora:", sub_titulo_fuente)) { Border = 0, HorizontalAlignment = Element.ALIGN_LEFT });
-            tabla.AddCell(new PdfPCell(new Phrase(puntos_datos.fecha_creacion_registro.ToString("dd/MM/yyy hh:mm"), parrafo_fuente)) { Border = 0, HorizontalAlignment = Element.ALIGN_MIDDLE });
+            tabla.AddCell(new PdfPCell(new Phrase(puntos_datos.fecha_creacion_registro, parrafo_fuente)) { Border = 0, HorizontalAlignment = Element.ALIGN_MIDDLE });
             doc.Add(tabla);
 
             doc.Add(new Paragraph(" "));
@@ -597,15 +559,98 @@ namespace Reciclaje_MVC.Controllers
             //detalle
             tabla.AddCell(new PdfPCell(new Phrase("1", parrafo_fuente)) { Border = 0, HorizontalAlignment = Element.ALIGN_MIDDLE });
             tabla.AddCell(new PdfPCell(new Phrase(puntos_datos.descripcion_empresa_descuento.ToString(), parrafo_fuente)) { Border = 0, HorizontalAlignment = Element.ALIGN_MIDDLE });
-            tabla.AddCell(new PdfPCell(new Phrase(puntos_datos.descuento_aplicado.ToString(), parrafo_fuente)) { Border = 0, HorizontalAlignment = Element.ALIGN_MIDDLE });
+            tabla.AddCell(new PdfPCell(new Phrase(puntos_datos.descuento_aplicado.ToString() +" %" , parrafo_fuente)) { Border = 0, HorizontalAlignment = Element.ALIGN_MIDDLE });
             doc.Add(tabla);
 
-            memoryStream.Position = 0;
             writer.CloseStream = false;
             doc.Close();
+
+            //poner siempre el memoryStream.Position al ultimo si el pdf no funciona
+            memoryStream.Position = 0;
             //return File(memoryStream, "application/pdf");
 
-            return memoryStream;
+            var file = Convert.ToBase64String(memoryStream.ToArray());
+
+            return file;
         }
     }
 }
+// [HttpPost]
+//[Route("exportar_pdf_reciclaje_cliente_puntos")]
+////public ActionResult exportar_pdf_reciclaje_cliente_puntos(int codigo_usuario)
+//public ActionResult exportar_pdf_reciclaje_cliente_puntos()
+
+//{
+//    Document doc = new Document();
+
+//    //se utiliza medida points
+//    // doc.SetPageSize(PageSize.A4);
+//    doc.SetPageSize(new Rectangle(226.772f, 326.772f));
+
+//    // doc.SetMargins(226.772f, 226.772f, 226.772f, 226.772f);
+//    MemoryStream memoryStream = new MemoryStream();
+//    PdfWriter writer = PdfWriter.GetInstance(doc, memoryStream);
+//    doc.AddAuthor("CJG - ECL");
+//    doc.AddTitle("PDF_PRUEBA");
+//    doc.Open();
+
+
+//    //base de titulo
+//    BaseFont base_titulo = BaseFont.CreateFont(BaseFont.COURIER, BaseFont.CP1250, true);
+//    Font titulo_fuente = new Font(base_titulo, 9f, Font.BOLD, BaseColor.BLACK);
+
+//    BaseFont base_sub_titulo = BaseFont.CreateFont(BaseFont.COURIER, BaseFont.CP1250, true);
+//    Font sub_titulo_fuente = new Font(base_sub_titulo, 7f, Font.BOLD, BaseColor.BLACK);
+
+//    BaseFont base_titulo_tabla = BaseFont.CreateFont(BaseFont.COURIER, BaseFont.CP1250, true);
+//    Font titulo_tabla_fuente = new Font(base_titulo_tabla, 7f, Font.BOLD, BaseColor.BLACK);
+
+//    BaseFont base_parrafo = BaseFont.CreateFont(BaseFont.COURIER, BaseFont.CP1250, true);
+//    Font parrafo_fuente = new Font(base_parrafo, 7f, Font.NORMAL, BaseColor.BLACK);
+
+//    BaseFont base_detalle = BaseFont.CreateFont(BaseFont.COURIER, BaseFont.CP1250, true);
+//    Font detalle_fuente = new Font(base_detalle, 7f, Font.NORMAL, BaseColor.BLACK);
+
+//    string ruta_clave_privada_SSH = System.IO.Path.Combine(System.AppDomain.CurrentDomain.BaseDirectory + "assets\\media\\reciclaje\\", "logo_sin_texto_color.png");
+
+//    Image img = Image.GetInstance(ruta_clave_privada_SSH);
+//    img.ScalePercent(15f);
+
+//    //aca se esta dando el tamaño de la tabla y el procentaje de la hoja
+//    var tabla = new PdfPTable(new float[] { 100f }) { WidthPercentage = 100 };
+//    tabla.AddCell(new PdfPCell(new Phrase("Sistema de reciclaje", titulo_fuente)) { Border = 0, HorizontalAlignment = Element.ALIGN_CENTER, VerticalAlignment = Element.ALIGN_CENTER });
+//    tabla.AddCell(new PdfPCell(img) { Border = 0, HorizontalAlignment = Element.ALIGN_CENTER, VerticalAlignment = Element.ALIGN_CENTER });
+//    doc.Add(tabla);
+
+//    tabla = new PdfPTable(new float[] { 50f, 50f }) { WidthPercentage = 100 };
+
+//    tabla.AddCell(new PdfPCell(new Phrase("Ticket De Descuento", sub_titulo_fuente)) { Border = 0, HorizontalAlignment = Element.ALIGN_CENTER, VerticalAlignment = Element.ALIGN_CENTER, Colspan = 2 });
+//    tabla.AddCell(new PdfPCell(new Phrase("Cod. Ticket:", sub_titulo_fuente)) { Border = 0, HorizontalAlignment = Element.ALIGN_LEFT });
+//    tabla.AddCell(new PdfPCell(new Phrase("1111", parrafo_fuente)) { Border = 0, HorizontalAlignment = Element.ALIGN_MIDDLE });
+
+//    tabla.AddCell(new PdfPCell(new Phrase("Cod. Cliente:", sub_titulo_fuente)) { Border = 0, HorizontalAlignment = Element.ALIGN_LEFT });
+//    tabla.AddCell(new PdfPCell(new Phrase("1111", parrafo_fuente)) { Border = 0, HorizontalAlignment = Element.ALIGN_MIDDLE });
+
+//    tabla.AddCell(new PdfPCell(new Phrase("Fecha/Hora:", sub_titulo_fuente)) { Border = 0, HorizontalAlignment = Element.ALIGN_LEFT });
+//    tabla.AddCell(new PdfPCell(new Phrase(DateTime.Now.ToString("dd/MM/yyy hh:mm"), parrafo_fuente)) { Border = 0, HorizontalAlignment = Element.ALIGN_MIDDLE });
+//    doc.Add(tabla);
+
+//    doc.Add(new Paragraph(" "));
+
+//    //columna
+//    tabla = new PdfPTable(new float[] { 50f, 50f, 50f }) { WidthPercentage = 100 };
+//    tabla.AddCell(new PdfPCell(new Phrase("Cantidad", titulo_tabla_fuente)) { Border = 0, HorizontalAlignment = Element.ALIGN_MIDDLE });
+//    tabla.AddCell(new PdfPCell(new Phrase("Descripcion", titulo_tabla_fuente)) { Border = 0, HorizontalAlignment = Element.ALIGN_MIDDLE });
+//    tabla.AddCell(new PdfPCell(new Phrase("Descuento", titulo_tabla_fuente)) { Border = 0, HorizontalAlignment = Element.ALIGN_MIDDLE });
+
+//    //detalle
+//    tabla.AddCell(new PdfPCell(new Phrase("1", parrafo_fuente)) { Border = 0, HorizontalAlignment = Element.ALIGN_MIDDLE });
+//    tabla.AddCell(new PdfPCell(new Phrase("BIMBO", parrafo_fuente)) { Border = 0, HorizontalAlignment = Element.ALIGN_MIDDLE });
+//    tabla.AddCell(new PdfPCell(new Phrase("20%", parrafo_fuente)) { Border = 0, HorizontalAlignment = Element.ALIGN_MIDDLE });
+//    doc.Add(tabla);
+
+//    writer.CloseStream = false;
+//    doc.Close();
+//    memoryStream.Position = 0;
+//    return File(memoryStream, "application/pdf");
+//}

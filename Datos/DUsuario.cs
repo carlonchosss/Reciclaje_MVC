@@ -121,7 +121,7 @@ namespace Datos
                     parameters.Add("@correo_electronico", obj.correo_electronico);
                     parameters.Add("@usuario", obj.usuario);
                     parameters.Add("@contrasenia", obj.contrasenia);
-                    // parameters.Add("@codigo_perfil_usuario", obj.codigo_perfil_usuario);
+                    parameters.Add("@codigo_perfil_usuario", obj.codigo_perfil_usuario);
 
                     valor = cn.Query<bool>("crear_usuario_sistema", parameters, commandType: CommandType.StoredProcedure).SingleOrDefault();
                 }
@@ -151,6 +151,8 @@ namespace Datos
                     parameters.Add("@habilitado", obj.habilitado);
                     parameters.Add("@contrasenia", obj.contrasenia);
                     parameters.Add("@codigo_usuario", obj.codigo_usuario);
+                    parameters.Add("@codigo_perfil_usuario", obj.codigo_perfil_usuario);
+
                     valor = cn.Query<bool>("actualizar_usuario_sistema", parameters, commandType: CommandType.StoredProcedure).SingleOrDefault();
                 }
             }
@@ -168,7 +170,7 @@ namespace Datos
                 using (SqlConnection cn = new DConexion().ConectarBD())
                 {
                     cn.Open();
-                    var parameters = new DynamicParameters();  
+                    var parameters = new DynamicParameters();
                     parameters.Add("@codigo_usuario", obj);
                     valor = cn.Query<bool>("actualizar_estado_usuario_sistema", parameters, commandType: CommandType.StoredProcedure).SingleOrDefault();
                 }
@@ -179,7 +181,50 @@ namespace Datos
             }
             return valor;
         }
-        
+
+        public List<EPerfil_Usuario> Listar_Perfiles()
+        {
+            List<EPerfil_Usuario> obj_resultado;
+            try
+            {
+                using (SqlConnection cn = new DConexion().ConectarBD())
+                {
+                    cn.Open();
+                    obj_resultado = new List<EPerfil_Usuario>();
+                    var parameters = new DynamicParameters();
+                    //parameters.Add("@usuario", obj.usuario);
+                    //parameters.Add("@contrasenia", obj.contrasenia);
+                    obj_resultado = cn.Query<EPerfil_Usuario>("Listar_Perfiles_Sistema", parameters, commandType: CommandType.StoredProcedure).ToList();
+                }
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+            return obj_resultado;
+        }
+
+        public List<EPerfil_Usuario> Todos_Listar_Perfiles()
+        {
+            List<EPerfil_Usuario> obj_resultado;
+            try
+            {
+                using (SqlConnection cn = new DConexion().ConectarBD())
+                {
+                    cn.Open();
+                    obj_resultado = new List<EPerfil_Usuario>();
+                    var parameters = new DynamicParameters();
+                    //parameters.Add("@usuario", obj.usuario);
+                    //parameters.Add("@contrasenia", obj.contrasenia);
+                    obj_resultado = cn.Query<EPerfil_Usuario>("Todo_Listar_Perfiles_Sistema", parameters, commandType: CommandType.StoredProcedure).ToList();
+                }
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+            return obj_resultado;
+        }
 
     }
 }

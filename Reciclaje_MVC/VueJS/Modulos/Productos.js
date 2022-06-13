@@ -52,27 +52,8 @@
             var vm = this;
             vm.Listar_Productos();
             vm.Listar_Categoria();
+            vm.Tabla_Cliente_Query_Mount_Reload();
 
-            setTimeout(() => {
-                $("#tabla_cliente_responsivo").DataTable({
-                    "language": {
-                        "url": "//cdn.datatables.net/plug-ins/1.10.16/i18n/Spanish.json"
-                    },
-                    responsive: true,
-                    "dom":
-                        "<'row'" +
-                        "<'col-sm-6 d-flex align-items-center justify-conten-start'l>" +
-                        "<'col-sm-6 d-flex align-items-center justify-content-end'f>" +
-                        ">" +
-
-                        "<'table-responsive'tr>" +
-
-                        "<'row'" +
-                        "<'col-sm-12 col-md-5 d-flex align-items-center justify-content-center justify-content-md-start'i>" +
-                        "<'col-sm-12 col-md-7 d-flex align-items-center justify-content-center justify-content-md-end'p>" +
-                        ">"
-                })
-            }, 270);
         },
 
         methods:
@@ -100,6 +81,7 @@
                                 if (user.resultado) {
                                     vm.limpiar_campos();
                                     vm.Listar_Productos();
+                                    vm.Tabla_Cliente_Query_Mount_Reload();
                                     $('#modalformularioproducto').modal("hide");
 
                                     vm.metodo_notificacion('text-success', 'bg-success', user.titulo, user.mensaje)
@@ -130,6 +112,7 @@
                                 if (user.resultado) {
                                     vm.limpiar_campos();
                                     vm.Listar_Productos();
+                                    vm.Tabla_Cliente_Query_Mount_Reload();
                                     $('#modalformularioproducto').modal("hide");
 
                                     vm.metodo_notificacion('text-success', 'bg-success', user.titulo, user.mensaje)
@@ -162,7 +145,7 @@
 
                 var vm = this;
 
-                return axios.post('/Producto/Listar_Producto', {
+                return axios.post('/Producto/Todo_Listar_Producto', {
                     params: {
                     }
                 })
@@ -196,7 +179,7 @@
                 var vm = this;
 
                 vm.limpiar_campos();
-                vm.titulo_producto_modal = 'Editar Producto';
+                vm.titulo_producto_modal = 'Editar Material';
                 vm.codigo_producto = datos.codigo_producto;
                 vm.descripcion = datos.descripcion_producto;
                 vm.categoria = datos.codigo_categoria;
@@ -217,6 +200,7 @@
                     var user = response.data;
                     if (user.resultado) {
                         vm.Listar_Productos();
+                        vm.Tabla_Cliente_Query_Mount_Reload();
                         vm.metodo_notificacion('text-success', 'bg-success', user.titulo, user.mensaje)
                     } else {
                         console.log(user)
@@ -234,17 +218,42 @@
                 vm.$validator.reset('formdatosproducto');
                 vm.codigo_producto = 0;
                 vm.descripcion = '';
+                vm.categoria = '';
                 vm.estado = 1;
             },
 
             agregar_datos_cliente(valor) {
                 var vm = this;
                 vm.limpiar_campos();
-                vm.titulo_producto_modal = 'Agregar Producto';
+                vm.titulo_producto_modal = 'Agregar Material';
                 $('#modalformularioproducto').modal("show");
 
             },
+            Tabla_Cliente_Query_Mount_Reload() {
+                $('#tabla_cliente_responsivo').DataTable().destroy();
+                setTimeout(() => {
+                    $("#tabla_cliente_responsivo").DataTable({
+                        "language": {
+                            "url": "//cdn.datatables.net/plug-ins/1.10.16/i18n/Spanish.json"
+                        },
+                        responsive: true,
+                        pageLength: 5,
+                        lengthMenu: [[5, 10, 25, 50, 100, -1], [5, 10, 25, 50, 100, 'Todos']],
+                        "dom":
+                            "<'row'" +
+                            "<'col-sm-6 d-flex align-items-center justify-conten-start'l>" +
+                            "<'col-sm-6 d-flex align-items-center justify-content-end'f>" +
+                            ">" +
 
+                            "<'table-responsive'tr>" +
+
+                            "<'row'" +
+                            "<'col-sm-12 col-md-5 d-flex align-items-center justify-content-center justify-content-md-start'i>" +
+                            "<'col-sm-12 col-md-7 d-flex align-items-center justify-content-center justify-content-md-end'p>" +
+                            ">"
+                    })
+                }, 270);
+            },
             metodo_notificacion(estilo_texto, estilo_titulo, texto_titulo, texto_mensaje) {
                 const vm = this;
                 vm.texto_titulo = texto_titulo;

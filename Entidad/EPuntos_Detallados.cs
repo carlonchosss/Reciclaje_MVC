@@ -13,9 +13,9 @@ namespace Entidad
         public int puntos_canjeados { get; set; }
         public decimal descuento_aplicado { get; set; }
         public int codigo_empresa_descuento { get; set; }
-        public DateTime fecha_creacion_registro { get; set; }
+        public string fecha_creacion_registro { get; set; }
         public bool habilitado { get; set; }
 
         public string descripcion_empresa_descuento { get; set; }
-    }
+        public string numero_documento{ get; set; }    }
 }

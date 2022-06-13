@@ -66,7 +66,7 @@
             vm.listar_Productos_Categorias();
             vm.Listar_Categoria();
             vm.tabla_jquery_reload_mount();
-            vm.Listar_Reciclaje_Usuario();
+            vm.Listar_Puntos_Usuario();
             vm.tabla_jquery_reload_mount_reciclaje();
             vm.mostrar_puntos_reciclaje();
 
@@ -98,7 +98,7 @@
                                 valor_detalle: vm.registro_detalle_gestion
                             })
                                 .then(function (response) {
-                                    vm.Listar_Reciclaje_Usuario();
+                                    vm.Listar_Puntos_Usuario();
                                     vm.tabla_jquery_reload_mount_reciclaje();
                                     vm.mostrar_puntos_reciclaje();
                                     vm.registro_detalle_gestion = [];
@@ -209,11 +209,11 @@
                     });
             },
 
-            Listar_Reciclaje_Usuario() {
+            Listar_Puntos_Usuario() {
 
                 var vm = this;
 
-                return axios.post('/Reciclaje/Listar_Reciclaje_Usuario', {
+                return axios.post('/PuntosDescuentos/Listar_Puntos_Usuario', {
                     codigo_usuario: vm.usuario.codigo_usuario,
                 })
                     .then(function (response) {
@@ -252,7 +252,27 @@
                 $('#modalformularioreciclajeprocesado').modal("show");
 
             },
+            exportar_pdf_puntos_cliente(datos) {
 
+                var vm = this;
+
+                return axios.post('/Reciclaje/obtener_puntos_descuento_reciclaje', {
+                    codigo_detalle: datos,
+
+                })
+                    .then(function (response) {
+                        console.log(response);
+                        vm.descargaPDF(response.data.base64, response.data.nombrepdf)
+                        vm.mostrar_puntos_reciclaje();
+
+                        $('#modalformulariocanjepuntos').modal("hide");
+                        vm.bloquar_campo = false;
+                    })
+                    .catch(function (error) {
+                        console.log(error);
+                    });
+
+            },
             deshabilitar_datos_cliente(codigo_registro_reciclaje) {
                 var vm = this;
                 //Actualizar
@@ -461,6 +481,7 @@
                                 console.log(response);
                                 vm.descargaPDF(response.data.base64, response.data.nombrepdf)
                                 vm.mostrar_puntos_reciclaje();
+
                                 $('#modalformulariocanjepuntos').modal("hide");
                                 vm.bloquar_campo = false;
                             })

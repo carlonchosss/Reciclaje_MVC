@@ -1,0 +1,171 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+}
+
+
+@{
+
+    ViewBag.Title = "Index";
+}
+<div class="content d-flex flex-column flex-column-fluid" id="kt_content">
+   
+    <!--begin::Post-->
+    <div id="appRegistroUsuarioAdmin">
+
+        <div class="post d-flex flex-column-fluid" id="kt_post">
+            <!--begin::Container-->
+            <div id="kt_content_container" class="container-xxl">
+
+                <button type="button" class="btn btn-warning" v-on:click="canjear_puntos()">
+                    @*v-if="puntaje_reciclaje>5">*@
+                    Canjear Puntos
+                </button>
+                @*//---------------------------------*@
+                <div class="row g-5">
+
+                    @*//---------------------------------*@
+                    <div class="col-lg-12 col-md-12">
+                        <div class="card card-header-stretch card-bordered mb-5">
+                            <div class="card-header border-top p-9">
+                                <div class="card-title m-0">
+                                    <h3 class="fw-bolder m-0">Datos Personales</h3>
+                                </div>
+                                <h3 class="fw-bolder m-0">Puntos Disponibles: {{puntaje_reciclaje}}</h3>
+                                @*<div class="col-md-6 fv-row fv-plugins-icon-container">
+                                        <label class="required fs-6 fw-bold mb-2">
+                                            N°Serie
+                                        </label>
+
+                                        <input id="cantidad"
+                                               type="text"
+                                               name="cantidad"
+                                               v-model="cantidad"
+                                               v-bind:class="{'is-invalid': errors.has('formdatosreciclaje.cantidad')}"
+                                               class="form-control form-control-solid">
+                                    </div>*@
+                            </div>
+                            <div class="card-body border-top p-9">
+                                @*<<-------->*@
+                                <table id="tabla_cliente_responsivos_reciclaje" class="table table-striped border rounded gy-5 gs-7">
+                                    <thead>
+                                        <tr class="fw-bolder fs-6 text-gray-800 px-7">
+                                            <th data-priority="1">ID</th>
+                                            <th data-priority="2">Fecha Registro Canje</th>
+                                            <th data-priority="5">Puntos Canjeados</th>
+                                            <th data-priority="5">Descuento</th>
+                                            <th data-priority="5">Descripcion Canje</th>
+                                            <th data-priority="3">Accion</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr v-for="(listas, index) in ListarReciclajeUsuario" :key="listas.codigo_puntos_detallados">
+                                            <th>{{index + 1}}</th>
+                                            <td>{{listas.fecha_creacion_registro}}</td>
+                                            <td>{{listas.puntos_canjeados}}</td>
+                                            <td>{{listas.descuento_aplicado}} %</td>
+                                            <td>{{listas.descripcion_empresa_descuento}}</td>
+                                            @*<td v-if="listas.habilitado ==1"><span class="badge badge-light-primary fw-bold">Habilitado</span></td>
+        <td v-else="listas.habilitado ==0"><span class="badge badge-light-danger fw-bold">Deshabilitado</span></td>*@
+                                            <td name="bstable-actions">
+                                                <div class="btn-list">
+                                                    <button id="btn_editar_cliente" type="button" class="btn btn-sm btn-danger" v-on:click="exportar_pdf_puntos_cliente(listas.codigo_puntos_detallados)">
+                                                        <span class="fas fa-file-pdf fs-4 me-0"> </span>
+                                                    </button>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                @*<<-------->*@
+
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                @*//---------------------------------*@                
+            @*<<---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------->*@
+
+            <div class="modal fade" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" id="modalformulariocanjepuntos">
+                <div class="modal-dialog modal-xl">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title">{{titulo_producto_modal}}</h5>
+
+                            <!--begin::Close-->
+                            <div class="btn btn-icon btn-sm btn-active-light-primary ms-2" data-bs-dismiss="modal" aria-label="Close">
+                                <span class="svg-icon svg-icon-2x"></span>
+                            </div>
+                            <!--end::Close-->
+                        </div>
+
+                        <div class="row g-5">
+                            @*//---------------------------------*@
+                            <div class="col-lg-12 col-md-12">
+                                <div class="card card-header-stretch card-bordered mb-5">
+                                    <div class="card-header border-top p-9">
+                                        <div class="card-title m-0">
+                                            <h3 class="fw-bolder m-0">Datos Personales</h3>
+                                        </div>
+                                    </div>
+                                    <div class="card-body border-top p-9">
+                                        <form class="needs-validation" data-vv-scope="formdatosreciclajeempresadescuento">
+                                            <div class="row mb-12">
+                                                <div class="col-md-12 fv-row fv-plugins-icon-container">
+                                                    <label class="required fs-6 fw-bold mb-2">Descuento</label>
+
+                                                    <select id="EmpresaDescuentoReciclajeCantidad"
+                                                            name="EmpresaDescuentoReciclajeCantidad"
+                                                            v-model="EmpresaDescuentoReciclajeCantidad"
+                                                            v-validate="'required'"
+                                                            v-bind:class="{'is-invalid': errors.has('formdatosreciclajeempresadescuento.EmpresaDescuentoReciclajeCantidad')}"
+                                                            class="form-select form-select-solid fw-bolder">
+                                                        <option value="">--- Seleccionar ---</option>
+                                                        <option v-for="opcion in listarEmpresaDescuentoReciclajeCantidad" :value="opcion">{{opcion.descripcion_empresa_descuento}}</option>
+                                                    </select>
+
+                                                    <span v-show="errors.has('formdatosreciclajeempresadescuento.EmpresaDescuentoReciclajeCantidad')" class="fv-plugins-message-container invalid-feedback">{{ errors.first('formdatosreciclajeempresadescuento.EmpresaDescuentoReciclajeCantidad') }}</span>
+                                                </div>
+                                            </div>
+                                            @*<<-------->*@
+
+                                            @*<<-------->*@
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-light" data-bs-dismiss="modal" v-on:click="limpiar_campos_puntos_cajeados()">Cerrar</button>
+                            <button type="submit" v-on:click.prevent="grabar_puntos_cajeados_reciclaje" v-if="listarEmpresaDescuentoReciclajeCantidad!=''" class="btn btn-primary">Canjear</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!--end::Post-->
+        <!--begin::Toast-->
+        <div id="kt_docs_toast_stack_container" class="toast-container position-fixed top-0 end-0 p-3 z-index-9999" style="z-index: 9999">
+            <div class="toast" role="alert" aria-live="assertive" aria-atomic="true" data-kt-docs-toast="stack">
+                <div class="toast-header text-white" :class="estilo_titulo">
+                    <span class="svg-icon svg-icon-2 svg-icon-primary me-3">...</span>
+                    <strong class="me-auto">{{texto_titulo}}</strong>
+                    <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close">X</button>
+                </div>
+                <div class="toast-body" :class="estilo_texto">{{texto_mensaje}}</div>
+            </div>
+        </div>
+        <!--end::Toast-->
+    </div>
+</div>
+
+
+@section scripts {
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.25/jspdf.plugin.autotable.min.js"></script>
+    <script src="~/VueJS/Modulos/PuntosDescuentos.js"></script>
+}
+
