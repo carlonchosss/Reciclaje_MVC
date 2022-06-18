@@ -41,9 +41,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="EAcceso_Web.cs" />
     <Compile Include="ECategoria.cs" />
     <Compile Include="EEmpresa_Descuento.cs" />
     <Compile Include="EMenu_Perfil.cs" />
+    <Compile Include="EMenu_Web.cs" />
     <Compile Include="EPerfil_Usuario.cs" />
     <Compile Include="EPuntos_Detallados.cs" />
     <Compile Include="ERegistro_Reciclaje_Detalle.cs" />

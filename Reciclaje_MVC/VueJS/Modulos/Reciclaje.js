@@ -345,6 +345,8 @@
                             "url": "//cdn.datatables.net/plug-ins/1.10.16/i18n/Spanish.json"
                         },
                         responsive: true,
+                        pageLength: 5,
+                        lengthMenu: [[5, 10, 25, 50, 100, -1], [5, 10, 25, 50, 100, 'Todos']],
                         "dom":
                             "<'row'" +
                             "<'col-sm-6 d-flex align-items-center justify-conten-start'l>" +
@@ -368,6 +370,8 @@
                             "url": "//cdn.datatables.net/plug-ins/1.10.16/i18n/Spanish.json"
                         },
                         responsive: true,
+                        pageLength: 5,
+                        lengthMenu: [[5, 10, 25, 50, 100, -1], [5, 10, 25, 50, 100, 'Todos']],
                         "dom":
                             "<'row'" +
                             "<'col-sm-6 d-flex align-items-center justify-conten-start'l>" +

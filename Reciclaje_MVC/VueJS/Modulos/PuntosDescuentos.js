@@ -63,9 +63,6 @@
         },
         mounted: function () {
             var vm = this;
-            vm.listar_Productos_Categorias();
-            vm.Listar_Categoria();
-            vm.tabla_jquery_reload_mount();
             vm.Listar_Puntos_Usuario();
             vm.tabla_jquery_reload_mount_reciclaje();
             vm.mostrar_puntos_reciclaje();
@@ -75,139 +72,6 @@
 
         methods:
         {
-            grabar_formulario_reciclaje(evt) {
-                evt.preventDefault()
-                var vm = this;
-
-                vm.$validator.validateAll('formdatosreciclajeprocesar').then(function (result) {
-                    if (result) {
-                        (vm.estado) ? vm.estado = 1 : vm.estado = 0;
-
-                        var objeto_reciclaje = {
-                            codigo_usuario: vm.usuario.codigo_usuario,
-                            ERegistro_Reciclaje_Detalle: vm.registro_detalle_gestion
-                        };
-
-                        if (vm.registro_detalle_gestion.length === 0) {
-                            return alert("Agregar detalle del Reciclaje");
-                        }
-                        else {
-                            return axios.post('/Reciclaje/guardar_reciclaje', {
-                                //objeto_reciclaje: JSON.stringify(objeto_reciclaje)
-                                codigo_usuario: vm.usuario.codigo_usuario,
-                                valor_detalle: vm.registro_detalle_gestion
-                            })
-                                .then(function (response) {
-                                    vm.Listar_Puntos_Usuario();
-                                    vm.tabla_jquery_reload_mount_reciclaje();
-                                    vm.mostrar_puntos_reciclaje();
-                                    vm.registro_detalle_gestion = [];
-                                    $('#modalformularioreciclaje').modal("hide");
-                                    vm.bloquar_campo = false;
-                                })
-                                .catch(function (error) {
-                                    console.log(error);
-                                });
-                        }
-
-                    };
-                }).catch(function (error) {
-                    console.log(error);
-                    console.log(error.response.data.status);
-                    console.log(error.response.data.message);
-                    vm.error = error.response.data.status
-                    vm.mensaje = error.response.data.message
-                    //bootstrap.toast(document.querySelector('#errortoast')).show();
-                    $('.toast').toast({ animation: true, autohide: true, delay: 3000 });
-                    $('.toast').toast("show")
-
-                });
-            },
-
-            insertar_actualizar_formulario_reciclaje_temp(evt) {
-                evt.preventDefault()
-                var vm = this;
-
-                vm.$validator.validateAll('formdatosreciclajetemp').then(function (result) {
-                    if (result) {
-                        (vm.estado) ? vm.estado = 1 : vm.estado = 0;
-
-                        if (vm.indexcodigo_registro_detalle === "") {
-                            //Insertar
-                            vm.registro_detalle_gestion.push({
-                                codigo_categoria: vm.categoria,
-                                descripcion_categoria: vm.obtener_valor_combobox("categoria", vm.categoria),
-                                codigo_producto: vm.producto,
-                                descripcion_producto: vm.obtener_valor_combobox("producto", vm.producto),
-                                cantidad: 1
-                            });
-
-                            console.log(vm.registro_detalle_gestion)
-                            vm.tabla_jquery_reload_mount();
-                            vm.limpiar_campos();
-                        } else {
-                            vm.registro_detalle_gestion[vm.indexcodigo_registro_detalle].codigo_categoria = vm.categoria;
-                            vm.registro_detalle_gestion[vm.indexcodigo_registro_detalle].descripcion_categoria = vm.obtener_valor_combobox("categoria", vm.categoria);
-                            vm.registro_detalle_gestion[vm.indexcodigo_registro_detalle].codigo_producto = vm.producto;
-                            vm.registro_detalle_gestion[vm.indexcodigo_registro_detalle].descripcion_producto = vm.obtener_valor_combobox("producto", vm.producto);
-                            vm.registro_detalle_gestion[vm.indexcodigo_registro_detalle].cantidad = 1;
-                            vm.tabla_jquery_reload_mount();
-                            vm.limpiar_campos();
-                            $('#modalformulariodatosreciclajetemp').modal("hide");
-                        }
-                    };
-                }).catch(function (error) {
-                    console.log(error);
-                    console.log(error.response.data.status);
-                    console.log(error.response.data.message);
-                    vm.error = error.response.data.status
-                    vm.mensaje = error.response.data.message
-                    //bootstrap.toast(document.querySelector('#errortoast')).show();
-                    $('.toast').toast({ animation: true, autohide: true, delay: 3000 });
-                    $('.toast').toast("show")
-
-                });
-            },
-
-            listar_Productos_Categorias(valor) {
-
-                var vm = this;
-                if (!valor) {
-                    vm.bloquar_campo = true;
-                    vm.listarProductos = [];
-                    vm.producto = '';
-                } else {
-                    return axios.post('/Reciclaje/Listar_Producto_Categoria', {
-                        codigo_categoria: valor
-
-                    })
-                        .then(function (response) {
-                            vm.producto = '';
-                            vm.listarProductos = response.data;
-                            vm.bloquar_campo = false;
-                        })
-                        .catch(function (error) {
-                            console.log(error);
-                        });
-                }
-            },
-
-            Listar_Categoria() {
-
-                var vm = this;
-
-                return axios.post('/Producto/Listar_Categorias', {
-                    params: {
-                    }
-                })
-                    .then(function (response) {
-                        vm.listarCategorias = response.data;
-
-                    })
-                    .catch(function (error) {
-                        console.log(error);
-                    });
-            },
 
             Listar_Puntos_Usuario() {
 
@@ -224,24 +88,6 @@
                         console.log(error);
                     });
             },
-            obtener_datos_cliente(datos, index) {
-
-                var vm = this;
-
-                vm.limpiar_campos();
-                vm.titulo_producto_modal = 'Editar Reciclaje';
-                vm.indexcodigo_registro_detalle = index;
-                vm.categoria = datos.codigo_categoria;
-                if (vm.categoria !== "") {
-                    vm.listar_Productos_Categorias(vm.categoria).then(function () {
-                        vm.producto = datos.codigo_producto;
-                    });
-                }
-                vm.cantidad = 1;
-                $('#modalformulariodatosreciclajetemp').modal("show");
-
-            },
-
             cargar_datos_cliente_reciclaje(datos) {
 
                 var vm = this;
@@ -273,62 +119,6 @@
                     });
 
             },
-            deshabilitar_datos_cliente(codigo_registro_reciclaje) {
-                var vm = this;
-                //Actualizar
-                return axios.post('/Producto/Actualizar_Estado_Producto', {
-
-                    codigo_registro_reciclaje: codigo_registro_reciclaje
-
-                }).then(function (response) {
-                    console.log(response.data);
-                    var user = response.data;
-                    if (user.resultado) {
-                        vm.listar_Productos_Categorias();
-                        vm.metodo_notificacion('text-success', 'bg-success', user.titulo, user.mensaje)
-                    } else {
-                        console.log(user)
-                        if (user.codigo_error === 0) {
-                            vm.metodo_notificacion('text-warning', 'bg-warning', user.errortitulo, user.mensaje)
-                        } else {
-                            vm.metodo_notificacion('text-danger', 'bg-danger', user.errortitulo, user.mensaje)
-                        }
-                    }
-                });
-            },
-
-            eliminar_datos_cliente(index) {
-                var vm = this;
-
-                vm.registro_detalle_gestion.splice(index, 1);
-                vm.tabla_jquery_reload_mount();
-                console.log(vm.detalleRequerimiento);
-            },
-
-            limpiar_campos() {
-                var vm = this;
-                vm.$validator.reset('formdatosreciclajetemp');
-                vm.indexcodigo_registro_detalle = "";
-                vm.categoria = "";
-                vm.producto = "";
-                vm.estado = 1;
-            },
-
-            agregar_datos_cliente(valor) {
-                var vm = this;
-                vm.limpiar_campos();
-                vm.titulo_producto_modal = 'Agregar Reciclaje';
-                $('#modalformulariodatosreciclajetemp').modal("show");
-
-            },
-
-            nuevo_reciclaje(valor) {
-                var vm = this;
-                vm.titulo_producto_modal = 'Reciclaje';
-                $('#modalformularioreciclaje').modal("show");
-
-            },
-
             metodo_notificacion(estilo_texto, estilo_titulo, texto_titulo, texto_mensaje) {
                 const vm = this;
                 vm.texto_titulo = texto_titulo;
@@ -345,7 +135,6 @@
                     }).show();
                 })
             },
-
             obtener_valor_combobox(getElementById, objeto_vm) {
 
                 let cmb_options = document.getElementById(getElementById);
@@ -357,29 +146,6 @@
                 }
                 return texto;
             },
-            tabla_jquery_reload_mount() {
-                $('#tabla_cliente_responsivo').DataTable().destroy();
-                setTimeout(() => {
-                    $("#tabla_cliente_responsivo").DataTable({
-                        "language": {
-                            "url": "//cdn.datatables.net/plug-ins/1.10.16/i18n/Spanish.json"
-                        },
-                        responsive: true,
-                        "dom":
-                            "<'row'" +
-                            "<'col-sm-6 d-flex align-items-center justify-conten-start'l>" +
-                            "<'col-sm-6 d-flex align-items-center justify-content-end'f>" +
-                            ">" +
-
-                            "<'table-responsive'tr>" +
-
-                            "<'row'" +
-                            "<'col-sm-12 col-md-5 d-flex align-items-center justify-content-center justify-content-md-start'i>" +
-                            "<'col-sm-12 col-md-7 d-flex align-items-center justify-content-center justify-content-md-end'p>" +
-                            ">"
-                    })
-                }, 270);
-            },
             tabla_jquery_reload_mount_reciclaje() {
                 $('#tabla_cliente_responsivos_reciclaje').DataTable().destroy();
                 setTimeout(() => {
@@ -388,6 +154,8 @@
                             "url": "//cdn.datatables.net/plug-ins/1.10.16/i18n/Spanish.json"
                         },
                         responsive: true,
+                        pageLength: 5,
+                        lengthMenu: [[5, 10, 25, 50, 100, -1], [5, 10, 25, 50, 100, 'Todos']],
                         "dom":
                             "<'row'" +
                             "<'col-sm-6 d-flex align-items-center justify-conten-start'l>" +
@@ -418,7 +186,6 @@
                         console.log(error);
                     });
             },
-
             canjear_puntos(valor) {
                 var vm = this;
                 vm.titulo_producto_modal = 'Nuevo Canje de Puntos';
@@ -443,7 +210,6 @@
                         console.log(error);
                     });
             },
-
             Listar_Empresa_Descuento_Reciclaje_cantidad() {
 
                 var vm = this;
@@ -460,7 +226,6 @@
                         console.log(error);
                     });
             },
-
             grabar_puntos_cajeados_reciclaje(evt) {
                 evt.preventDefault()
                 var vm = this;

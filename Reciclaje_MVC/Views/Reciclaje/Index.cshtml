@@ -55,13 +55,6 @@
             <!--begin::Container-->
             <div id="kt_content_container" class="container-xxl">
 
-                <button type="button" class="btn btn-primary" v-on:click="nuevo_reciclaje()">
-                    Nuevo Reciclaje
-                </button>
-
-                <button type="button" class="btn btn-warning offset-9" v-on:click="canjear_puntos()">
-                    Canjear Puntos
-                </button>
                 @*//---------------------------------*@
                 <div class="row g-5">
 
@@ -69,22 +62,30 @@
                     <div class="col-lg-12 col-md-12">
                         <div class="card card-header-stretch card-bordered mb-5">
                             <div class="card-header border-top p-9">
-                                <div class="card-title m-0">
+                                @*<div class="card-title m-0">
                                     <h3 class="fw-bolder m-0">Datos Personales</h3>
-                                </div>
-                                <h3 class="fw-bolder m-0">Puntos Disponibles: {{puntaje_reciclaje}}</h3>
-                                @*<div class="col-md-6 fv-row fv-plugins-icon-container">
-                                        <label class="required fs-6 fw-bold mb-2">
-                                            N°Serie
-                                        </label>
+                                </div>*@
+                                <div class="row col-md-12 d-flex justify-content-between ">
+                                    <div class="col-4">
+                                        <h3 class="fw-bolder m-0">Historial De Reciclaje</h3>
+                                    </div>
+                                    <div class="col-4">
+                                        <h3 class="fw-bolder m-0">Puntos Disponibles: {{puntaje_reciclaje}}</h3>
+                                    </div>
+                                    <div class="col-4">
+                                        <div class="row  d-flex justify-content-end">
+                                            <button type="button" class="btn btn-primary col-md-5 col-12 mx-1" v-on:click="nuevo_reciclaje()">
+                                                @*v-if="puntaje_reciclaje>5">*@
+                                                Nuevo Reciclaje
+                                            </button>
 
-                                        <input id="cantidad"
-                                               type="text"
-                                               name="cantidad"
-                                               v-model="cantidad"
-                                               v-bind:class="{'is-invalid': errors.has('formdatosreciclaje.cantidad')}"
-                                               class="form-control form-control-solid">
-                                    </div>*@
+                                            <button type="button" class="btn btn-warning col-md-5 col-12" v-on:click="canjear_puntos()">
+                                                @*v-if="puntaje_reciclaje>5">*@
+                                                Canjear Puntos
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                             <div class="card-body border-top p-9">
                                 @*<<-------->*@

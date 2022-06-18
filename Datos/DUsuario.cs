@@ -182,6 +182,7 @@ namespace Datos
             return valor;
         }
 
+        #region Rol
         public List<EPerfil_Usuario> Listar_Perfiles()
         {
             List<EPerfil_Usuario> obj_resultado;
@@ -204,7 +205,7 @@ namespace Datos
             return obj_resultado;
         }
 
-        public List<EPerfil_Usuario> Todos_Listar_Perfiles()
+        public List<EPerfil_Usuario> Todo_Listar_Perfiles()
         {
             List<EPerfil_Usuario> obj_resultado;
             try
@@ -225,6 +226,384 @@ namespace Datos
             }
             return obj_resultado;
         }
+        public bool Registro_Perfil_Usuario(EPerfil_Usuario obj)
+        {
+            bool valor = false;
+            try
+            {
+                using (SqlConnection cn = new DConexion().ConectarBD())
+                {
+                    cn.Open();
+                    var parameters = new DynamicParameters();
+                    parameters.Add("@descripcion_perfil_usuario", obj.descripcion_perfil_usuario);
+                    valor = cn.Query<bool>("crear_registro_perfil_usuario", parameters, commandType: CommandType.StoredProcedure).SingleOrDefault();
+                }
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+            return valor;
+        }
+        public EPerfil_Usuario Obtener_Perfil_Usuario(int obj)
+        {
+            EPerfil_Usuario obj_resultado;
+            try
+            {
+                using (SqlConnection cn = new DConexion().ConectarBD())
+                {
+                    cn.Open();
+                    obj_resultado = new EPerfil_Usuario();
+                    var parameters = new DynamicParameters();
+                    parameters.Add("@codigo_perfil_usuario", obj);
 
+                    obj_resultado = cn.Query<EPerfil_Usuario>("Obtener_Perfiles_Sistema", parameters, commandType: CommandType.StoredProcedure).FirstOrDefault();
+                }
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+            return obj_resultado;
+        }
+        public bool Actualizar_Perfil_Usuario(EPerfil_Usuario obj)
+        {
+            bool valor = false;
+            try
+            {
+                using (SqlConnection cn = new DConexion().ConectarBD())
+                {
+                    cn.Open();
+                    var parameters = new DynamicParameters();
+                    parameters.Add("@descripcion_perfil_usuario", obj.descripcion_perfil_usuario);
+                    parameters.Add("@habilitado", obj.habilitado);
+                    parameters.Add("@codigo_perfil_usuario", obj.codigo_perfil_usuario);
+
+                    valor = cn.Query<bool>("Actualizar_Perfil_Usuario", parameters, commandType: CommandType.StoredProcedure).SingleOrDefault();
+                }
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+            return valor;
+        }
+        public bool Actualizar_Estado_Perfil_Usuario(int obj)
+        {
+            bool valor = false;
+            try
+            {
+                using (SqlConnection cn = new DConexion().ConectarBD())
+                {
+                    cn.Open();
+                    var parameters = new DynamicParameters();
+                    parameters.Add("@codigo_perfil_usuario", obj);
+
+                    valor = cn.Query<bool>("Actualizar_Estado_Perfil_Usuario", parameters, commandType: CommandType.StoredProcedure).SingleOrDefault();
+                }
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+            return valor;
+        }
+
+        #endregion
+
+        #region Modulo
+        public List<EMenu_Web> Listar_Menu_Web()
+        {
+            List<EMenu_Web> obj_resultado;
+            try
+            {
+                using (SqlConnection cn = new DConexion().ConectarBD())
+                {
+                    cn.Open();
+                    obj_resultado = new List<EMenu_Web>();
+                    var parameters = new DynamicParameters();
+                    //parameters.Add("@usuario", obj.usuario);
+                    //parameters.Add("@contrasenia", obj.contrasenia);
+                    obj_resultado = cn.Query<EMenu_Web>("Listar_Menu_Web_Sistema", parameters, commandType: CommandType.StoredProcedure).ToList();
+                }
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+            return obj_resultado;
+        }
+
+        public List<EMenu_Web> Todo_Listar_Menu_Web()
+        {
+            List<EMenu_Web> obj_resultado;
+            try
+            {
+                using (SqlConnection cn = new DConexion().ConectarBD())
+                {
+                    cn.Open();
+                    obj_resultado = new List<EMenu_Web>();
+                    var parameters = new DynamicParameters();
+                    //parameters.Add("@usuario", obj.usuario);
+                    //parameters.Add("@contrasenia", obj.contrasenia);
+                    obj_resultado = cn.Query<EMenu_Web>("Todo_Listar_Menu_Web_Sistema", parameters, commandType: CommandType.StoredProcedure).ToList();
+                }
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+            return obj_resultado;
+        }
+        public bool Registro_Modulo(EMenu_Web obj)
+        {
+            bool valor = false;
+            try
+            {
+                using (SqlConnection cn = new DConexion().ConectarBD())
+                {
+                    cn.Open();
+                    var parameters = new DynamicParameters();
+                    parameters.Add("@descripcion", obj.descripcion);
+                    parameters.Add("@url", obj.url);
+
+                    valor = cn.Query<bool>("Registro_Menu_Web", parameters, commandType: CommandType.StoredProcedure).SingleOrDefault();
+                }
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+            return valor;
+        }
+        public EMenu_Web Obtener_Modulo(int obj)
+        {
+            EMenu_Web obj_resultado;
+            try
+            {
+                using (SqlConnection cn = new DConexion().ConectarBD())
+                {
+                    cn.Open();
+                    obj_resultado = new EMenu_Web();
+                    var parameters = new DynamicParameters();
+                    parameters.Add("@codigo_menu", obj);
+
+                    obj_resultado = cn.Query<EMenu_Web>("Obtener_Menu_Web_Sistema", parameters, commandType: CommandType.StoredProcedure).FirstOrDefault();
+                }
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+            return obj_resultado;
+        }
+        public bool Actualizar_Modulo(EMenu_Web obj)
+        {
+            bool valor = false;
+            try
+            {
+                using (SqlConnection cn = new DConexion().ConectarBD())
+                {
+                    cn.Open();
+                    var parameters = new DynamicParameters();
+                    parameters.Add("@descripcion", obj.descripcion);
+                    parameters.Add("@url", obj.url);
+                    parameters.Add("@habilitado", obj.habilitado);
+                    parameters.Add("@codigo_menu", obj.codigo_menu);
+                  
+                    valor = cn.Query<bool>("Actualizar_Menu_Web", parameters, commandType: CommandType.StoredProcedure).SingleOrDefault();
+                }
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+            return valor;
+        }
+        public bool Actualizar_Estado_Modulo(int obj)
+        {
+            bool valor = false;
+            try
+            {
+                using (SqlConnection cn = new DConexion().ConectarBD())
+                {
+                    cn.Open();
+                    var parameters = new DynamicParameters();
+                    parameters.Add("@codigo_menu", obj);
+
+                    valor = cn.Query<bool>("Actualizar_Estado_Menu_Web", parameters, commandType: CommandType.StoredProcedure).SingleOrDefault();
+                }
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+            return valor;
+        }
+
+        #endregion
+
+        #region Acceso
+        public List<EAcceso_Web> Listar_Acceso_Web()
+        {
+            List<EAcceso_Web> obj_resultado;
+            try
+            {
+                using (SqlConnection cn = new DConexion().ConectarBD())
+                {
+                    cn.Open();
+                    obj_resultado = new List<EAcceso_Web>();
+                    var parameters = new DynamicParameters();
+                    //parameters.Add("@usuario", obj.usuario);
+                    //parameters.Add("@contrasenia", obj.contrasenia);
+                    obj_resultado = cn.Query<EAcceso_Web>("Listar_Acceso_Web_Sistema", parameters, commandType: CommandType.StoredProcedure).ToList();
+                }
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+            return obj_resultado;
+        }
+
+        public List<EAcceso_Web> Todo_Listar_Acceso_Web()
+        {
+            List<EAcceso_Web> obj_resultado;
+            try
+            {
+                using (SqlConnection cn = new DConexion().ConectarBD())
+                {
+                    cn.Open();
+                    obj_resultado = new List<EAcceso_Web>();
+                    var parameters = new DynamicParameters();
+                    //parameters.Add("@usuario", obj.usuario);
+                    //parameters.Add("@contrasenia", obj.contrasenia);
+                    obj_resultado = cn.Query<EAcceso_Web>("Todo_Listar_Acceso_Web_Sistema", parameters, commandType: CommandType.StoredProcedure).ToList();
+                }
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+            return obj_resultado;
+        }
+        public List<EPerfil_Usuario> Obtener_Lista_Acceso_Rol(int obj)
+        {
+            List <EPerfil_Usuario> obj_resultado;
+            try
+            {
+                using (SqlConnection cn = new DConexion().ConectarBD())
+                {
+                    cn.Open();
+                    obj_resultado = new List<EPerfil_Usuario>();
+                    var parameters = new DynamicParameters();
+                    parameters.Add("@codigo_perfil_usuario", obj);
+
+                    obj_resultado = cn.Query<EPerfil_Usuario>("Obtener_Lista_Acceso_Rol", parameters, commandType: CommandType.StoredProcedure).ToList();
+                }
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+            return obj_resultado;
+        }
+
+
+        //public bool Registro_Acceso(EAcceso_Web obj)
+        //{
+        //    bool valor = false;
+        //    try
+        //    {
+        //        using (SqlConnection cn = new DConexion().ConectarBD())
+        //        {
+        //            cn.Open();
+        //            var parameters = new DynamicParameters();
+        //            parameters.Add("@descripcion", obj.descripcion);
+        //            parameters.Add("@codigo_padre", obj.codigo_padre);
+        //            parameters.Add("@orden", obj.orden);
+        //            parameters.Add("@nivel", obj.nivel);
+        //            parameters.Add("@url", obj.url);
+        //            parameters.Add("@icono", obj.icono);
+
+        //            valor = cn.Query<bool>("Registro_Acceso_Web", parameters, commandType: CommandType.StoredProcedure).SingleOrDefault();
+        //        }
+        //    }
+        //    catch (Exception)
+        //    {
+        //        throw;
+        //    }
+        //    return valor;
+        //}
+        //public EAcceso_Web Obtener_Acceso(int obj)
+        //{
+        //    EAcceso_Web obj_resultado;
+        //    try
+        //    {
+        //        using (SqlConnection cn = new DConexion().ConectarBD())
+        //        {
+        //            cn.Open();
+        //            obj_resultado = new EAcceso_Web();
+        //            var parameters = new DynamicParameters();
+        //            parameters.Add("@codigo_perfil_usuario", obj);
+
+        //            obj_resultado = cn.Query<EAcceso_Web>("Obtener_Acceso_Web_Sistema", parameters, commandType: CommandType.StoredProcedure).FirstOrDefault();
+        //        }
+        //    }
+        //    catch (Exception)
+        //    {
+        //        throw;
+        //    }
+        //    return obj_resultado;
+        //}
+        //public bool Actualizar_Acceso(EAcceso_Web obj)
+        //{
+        //    bool valor = false;
+        //    try
+        //    {
+        //        using (SqlConnection cn = new DConexion().ConectarBD())
+        //        {
+        //            cn.Open();
+        //            var parameters = new DynamicParameters();
+        //            parameters.Add("@descripcion", obj.descripcion);
+        //            parameters.Add("@codigo_padre", obj.codigo_padre);
+        //            parameters.Add("@orden", obj.orden);
+        //            parameters.Add("@nivel", obj.nivel);
+        //            parameters.Add("@url", obj.url);
+        //            parameters.Add("@icono", obj.icono);
+        //            parameters.Add("@habilitado", obj.habilitado);
+        //            parameters.Add("@codigo_menu", obj.codigo_menu);
+
+        //            valor = cn.Query<bool>("Actualizar_Acceso_Web", parameters, commandType: CommandType.StoredProcedure).SingleOrDefault();
+        //        }
+        //    }
+        //    catch (Exception)
+        //    {
+        //        throw;
+        //    }
+        //    return valor;
+        //}
+        //public bool Actualizar_Estado_Acceso(int obj)
+        //{
+        //    bool valor = false;
+        //    try
+        //    {
+        //        using (SqlConnection cn = new DConexion().ConectarBD())
+        //        {
+        //            cn.Open();
+        //            var parameters = new DynamicParameters();
+        //            parameters.Add("@codigo_menu", obj);
+
+        //            valor = cn.Query<bool>("Actualizar_Estado_Acceso_Web", parameters, commandType: CommandType.StoredProcedure).SingleOrDefault();
+        //        }
+        //    }
+        //    catch (Exception)
+        //    {
+        //        throw;
+        //    }
+        //    return valor;
+        //}
+
+        #endregion
     }
 }

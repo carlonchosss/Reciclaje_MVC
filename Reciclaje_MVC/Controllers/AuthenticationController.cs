@@ -27,7 +27,7 @@ namespace Reciclaje_MVC.Controllers
         //-------------------Metodos
 
         [HttpPost]
-        [Route("Loguin")]
+        [Route("Usuario_por_Documento_Password")]
         public ActionResult Usuario_por_Documento_Password(EUsuario_Login obj)
 
         {
@@ -35,6 +35,10 @@ namespace Reciclaje_MVC.Controllers
             {
                 nUsuario = new NUsuario();
                 eUsuario = new EUsuario();
+                Utilidades.Encrypt Encrypt = new Utilidades.Encrypt();
+
+                
+                obj.contrasenia = Encrypt.Encrypt_MD5(obj.contrasenia);
                 var existe_usuario = nUsuario.validar_existe_usuario_por_documento(obj);
 
                 if (existe_usuario)
@@ -83,7 +87,7 @@ namespace Reciclaje_MVC.Controllers
 
         //-------------------Metodos
         [HttpGet]
-        [Route("Register")]
+        [Route("Crear_Usuario_por_Documento")]
         public ActionResult Crear_Usuario_por_Documento(EUsuario obj)
 
         {

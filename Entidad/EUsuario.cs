@@ -23,5 +23,7 @@ namespace Entidad
         public bool habilitado { get; set; }
         public int puntos_acumulados { get; set; }
 
+       // public EPerfil_Usuario
+        ////Herencia de 0 a muchos
     }
 }
