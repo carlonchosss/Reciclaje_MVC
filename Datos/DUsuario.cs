@@ -366,6 +366,7 @@ namespace Datos
                     var parameters = new DynamicParameters();
                     parameters.Add("@descripcion", obj.descripcion);
                     parameters.Add("@url", obj.url);
+                    parameters.Add("@codigo_padre", obj.codigo_padre);
 
                     valor = cn.Query<bool>("Registro_Menu_Web", parameters, commandType: CommandType.StoredProcedure).SingleOrDefault();
                 }
@@ -410,7 +411,8 @@ namespace Datos
                     parameters.Add("@url", obj.url);
                     parameters.Add("@habilitado", obj.habilitado);
                     parameters.Add("@codigo_menu", obj.codigo_menu);
-                  
+                    parameters.Add("@codigo_padre", obj.codigo_padre);
+
                     valor = cn.Query<bool>("Actualizar_Menu_Web", parameters, commandType: CommandType.StoredProcedure).SingleOrDefault();
                 }
             }
@@ -439,6 +441,27 @@ namespace Datos
                 throw;
             }
             return valor;
+        }
+        public List<EMenu_Web> Listar_Menu_Web_Parentesco()
+        {
+            List<EMenu_Web> obj_resultado;
+            try
+            {
+                using (SqlConnection cn = new DConexion().ConectarBD())
+                {
+                    cn.Open();
+                    obj_resultado = new List<EMenu_Web>();
+                    var parameters = new DynamicParameters();
+                    //parameters.Add("@usuario", obj.usuario);
+                    //parameters.Add("@contrasenia", obj.contrasenia);
+                    obj_resultado = cn.Query<EMenu_Web>("Listar_Menu_Parentesco", parameters, commandType: CommandType.StoredProcedure).ToList();
+                }
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+            return obj_resultado;
         }
 
         #endregion

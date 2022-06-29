@@ -227,9 +227,9 @@ namespace Reciclaje_MVC.Controllers
 
                 var Listar_Perfiles = nUsuario.Todo_Listar_Perfiles();
                 //var Listar_Perfiless = nUsuario.Todo_Listar_Perfiles().ToList();
-               // var Listar_Perfiless_habilitado = Listar_Perfiless.Where(x => x.habilitado == true).ToList();
+                // var Listar_Perfiless_habilitado = Listar_Perfiless.Where(x => x.habilitado == true).ToList();
 
-               // var prueba =Listar_Perfiless_habilitado.Count();
+                // var prueba =Listar_Perfiless_habilitado.Count();
                 if (Listar_Perfiles.Count == 0)
                 {
                     HttpContext.Response.StatusCode = (int)HttpStatusCode.BadRequest;
@@ -404,6 +404,7 @@ namespace Reciclaje_MVC.Controllers
 
         #endregion
         #region Modulo
+   // [Authorize]
         public ActionResult Menu_Web()
         {
             return View();
@@ -621,6 +622,37 @@ namespace Reciclaje_MVC.Controllers
                 return new JsonResult { Data = new { status = "Error - Servidor", message = ex }, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
             }
         }
+
+        //-------------------Metodos
+        [HttpPost]
+        [Route("Listar_Menu_Web_Parentesco")]
+        public ActionResult Listar_Menu_Web_Parentesco()
+
+        {
+            try
+            {
+                nUsuario = new NUsuario();
+
+                var Listar_Menu_Web = nUsuario.Listar_Menu_Web_Parentesco();
+
+                if (Listar_Menu_Web.Count == 0)
+                {
+                    HttpContext.Response.StatusCode = (int)HttpStatusCode.BadRequest;
+                    return new JsonResult { Data = new { status = "Informativo", message = "No hay Datos" }, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
+                }
+                else
+                {
+                    return new JsonResult { Data = Listar_Menu_Web, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
+                }
+            }
+            catch (Exception ex)
+            {
+                nUsuario = new NUsuario();
+                HttpContext.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
+                return new JsonResult { Data = new { status = "Error - Servidor", message = ex }, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
+            }
+        }
+        //-------------------Metodos
         #endregion
         #region Acessos
         public ActionResult Acessos()

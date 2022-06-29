@@ -52,6 +52,8 @@ namespace Reciclaje_MVC.Controllers
                     }
                     else
                     {
+                    //Session["currentUserss"] = eUsuario;
+
                         return new JsonResult { Data = new { resultado = true, datos = eUsuario, JsonRequestBehavior = JsonRequestBehavior.AllowGet } };
 
                     }

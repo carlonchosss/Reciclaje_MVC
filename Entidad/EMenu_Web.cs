@@ -19,6 +19,8 @@ namespace Entidad
         public int codigo_usuario_creacion { get; set; }
         public DateTime fecha_creacion_registro { get; set; }
         public bool habilitado { get; set; }
+        public string parentesco_menu { get; set; }
+        public string parentesco_url { get; set; }
 
         ////Herencia de 0 a muchos
         //public List<EPerfil_Usuario> ePerfil_Usuarios { get; set; }

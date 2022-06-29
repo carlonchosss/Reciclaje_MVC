@@ -59,7 +59,7 @@
             listarMenu() {
 
                 var vm = this;
-                var codigoPerfil = 1
+                const codigoPerfil = vm.usuario_login.codigo_perfil_usuario
 
                 return axios.get('/Authentication/listar_menu_perfil', {
                     params: {

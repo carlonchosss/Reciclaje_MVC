@@ -79,16 +79,20 @@
                                             <th data-priority="1">ID</th>
                                             <th data-priority="2">Descripcion</th>
                                             <th data-priority="5">Url</th>
-                                            <th data-priority="5">Estado</th>   
+                                            <th data-priority="5">Parentesco Menu</th>
+                                            <th data-priority="5">Parentesco Url</th>
+                                            <th data-priority="5">Estado</th>
                                             <th data-priority="3">Accion</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr v-for="(listas, index) in ListarPerfiles" :key="listas.codigo_menu">
+                                        <tr v-for="(listas, index) in ListarMenuWeb" :key="listas.codigo_menu">
                                             @*<td>{{listas.codigo_menu}}</td>*@
                                             <th>{{index + 1}}</th>
                                             <td>{{listas.descripcion}}</td>
                                             <td>{{listas.url}}</td>
+                                            <td>{{listas.parentesco_menu}}</td>
+                                            <td>{{listas.parentesco_url}}</td>
                                             <td v-if="listas.habilitado ==1"><span class="badge badge-light-primary fw-bold">Habilitado</span></td>
                                             <td v-else="listas.habilitado ==0"><span class="badge badge-light-danger fw-bold">Deshabilitado</span></td>
                                             <td name="bstable-actions">
@@ -96,6 +100,8 @@
                                                     <button id="btn_editar_cliente" type="button" class="btn btn-sm btn-primary" v-on:click="obtener_datos_cliente(listas)">
                                                         <span class="fas fa-user-edit fs-4 me-0"> </span>
                                                     </button>
+                                                    @*<button v-if="listas.habilitado ==1" id="btn_agregar_sub_menu_cliente" type="button" class="btn btn-sm btn-success" v-on:click="obtener_datos_cliente(listas)">
+                <span class="fas fa-caret-square-down fs-4 me-0"> </span>                                    </button>*@
                                                     <button v-if="listas.habilitado ==1" id="btn_eliminar_cliente" type="button" class="btn  btn-sm btn-danger" v-on:click="deshabilitar_datos_cliente(listas.codigo_menu)">
                                                         <span class="fas fa-user-times fs-4 me-0"> </span>
                                                     </button>
@@ -159,6 +165,23 @@
                                                 <span v-show="errors.has('form_modal_datos_modulo.descripcion_url')" class="fv-plugins-message-container invalid-feedback">{{ errors.first('form_modal_datos_modulo.descripcion_url') }}</span>
                                             </div>
                                         </div>
+                                        <div class="row mb-12">
+                                            <div class="col-md-12 fv-row fv-plugins-icon-container">
+                                                <label class="required fs-6 fw-bold mb-2">Parentesco Menu</label>
+
+                                                <select id="parentesco_menu"
+                                                        name="parentesco_menu"
+                                                        v-model="parentesco_menu"
+                                                        @*v-bind:disabled="deshabilitar_tab_deriva_jefe"*@
+                                                        v-bind:class="{'is-invalid': errors.has('form_modaform_modal_datos_modulol_datos_modulo.parentesco_menu')}"
+                                                        class="form-select form-select-solid fw-bolder">
+                                                    <option value="">--- Opcional Seleccionar ---</option>
+                                                    <option v-for="opcion in ListarMenuWebParentesco" :value="opcion.codigo_menu">{{opcion.descripcion}}</option>
+                                                </select>
+
+                                                <span v-show="errors.has('form_modaform_modal_datos_modulol_datos_modulo.parentesco_menu')" class="fv-plugins-message-container invalid-feedback">{{ errors.first('form_modaform_modal_datos_modulol_datos_modulo.parentesco_menu') }}</span>
+                                            </div>
+                                        </div>
                                         @*<<-------->*@
                                         <div class="row mb-6">
                                             <div class="col-md-6 fv-row fv-plugins-icon-container" v-if="codigo_menu>0">
@@ -177,6 +200,7 @@
                                         @*</-------->*@
                                     </div>
                                 </form>
+                                @*//---------------------------------*@
                             </div>
 
                             <div class="modal-footer">
@@ -187,6 +211,7 @@
                         </div>
                     </div>
                 </div>
+                
             </div>
 
             <!--end::Container-->

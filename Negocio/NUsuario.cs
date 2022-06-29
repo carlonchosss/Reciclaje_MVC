@@ -41,7 +41,8 @@ namespace Negocio
         public EMenu_Web Obtener_Modulo(int obj) => new DUsuario().Obtener_Modulo(obj);
         public bool Actualizar_Modulo(EMenu_Web obj) => new DUsuario().Actualizar_Modulo(obj);
         public bool Actualizar_Estado_Modulo(int obj) => new DUsuario().Actualizar_Estado_Modulo(obj);
-
+        public List<EMenu_Web> Listar_Menu_Web_Parentesco() => new DUsuario().Listar_Menu_Web_Parentesco();
+                
         #endregion
         #region Acessos
         public List<EAcceso_Web> Listar_Acceso_Web() => new DUsuario().Listar_Acceso_Web();
