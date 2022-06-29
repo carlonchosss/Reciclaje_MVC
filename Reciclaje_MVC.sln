@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.28307.1831
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.32413.511
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Reciclaje_MVC", "Reciclaje_MVC\Reciclaje_MVC.csproj", "{AE73B6D7-B1D0-4755-81E0-10C8407E69FD}"
 EndProject
@@ -10,6 +10,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Entidad", "Entidad\Entidad.csproj", "{5BA15F92-C7D4-43C2-BEB0-DD2AD4E45830}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Negocio", "Negocio\Negocio.csproj", "{84E5CC92-FC6D-41F2-A37A-92AD14C86AF0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitTest_Reciclaje_MVC", "UnitTest_Reciclaje_MVC\UnitTest_Reciclaje_MVC.csproj", "{D359BF37-CC65-40E8-A6B2-667102D0A3EE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +35,10 @@ Global
 		{84E5CC92-FC6D-41F2-A37A-92AD14C86AF0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{84E5CC92-FC6D-41F2-A37A-92AD14C86AF0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{84E5CC92-FC6D-41F2-A37A-92AD14C86AF0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D359BF37-CC65-40E8-A6B2-667102D0A3EE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D359BF37-CC65-40E8-A6B2-667102D0A3EE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D359BF37-CC65-40E8-A6B2-667102D0A3EE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D359BF37-CC65-40E8-A6B2-667102D0A3EE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

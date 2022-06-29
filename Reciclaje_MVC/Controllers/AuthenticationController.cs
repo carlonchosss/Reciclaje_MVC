@@ -100,7 +100,6 @@ namespace Reciclaje_MVC.Controllers
                 eUsuario_Login = new EUsuario_Login();
 
                 eUsuario_Login.usuario = obj.usuario;
-                eUsuario_Login.contrasenia = obj.contrasenia;
 
                 var existe_usuario = nUsuario.validar_existe_usuario_por_documento(eUsuario_Login);
 
@@ -112,6 +111,9 @@ namespace Reciclaje_MVC.Controllers
                 else
                 {
                     HttpContext.Response.StatusCode = (int)HttpStatusCode.OK;
+
+                    Utilidades.Encrypt Encrypt = new Utilidades.Encrypt();
+                    obj.contrasenia = Encrypt.Encrypt_MD5(obj.contrasenia);
                     var crear_usuario = nUsuario.crear_usuario_documento(obj);
 
                     return new JsonResult { Data = crear_usuario, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
