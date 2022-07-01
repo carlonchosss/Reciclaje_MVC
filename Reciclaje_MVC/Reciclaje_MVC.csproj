@@ -2323,6 +2323,7 @@
     <Content Include="Views\Cliente\Menu_Web.cshtml" />
     <Content Include="Views\Cliente\Acessos.cshtml" />
     <Content Include="Views\Reporte\Reporte_Descuento.cshtml" />
+    <Content Include="Views\Reporte\Reporte_Materiales.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

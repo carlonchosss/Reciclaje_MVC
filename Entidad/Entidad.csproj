@@ -50,6 +50,7 @@
     <Compile Include="EPuntos_Detallados.cs" />
     <Compile Include="ERegistro_Reciclaje_Detalle.cs" />
     <Compile Include="ERegistro_Reciclaje.cs" />
+    <Compile Include="EReporte_Categoria_Materiales.cs" />
     <Compile Include="EReporte_Empresa_Descuento.cs" />
     <Compile Include="EUsuario.cs" />
     <Compile Include="EUsuario_Login.cs" />

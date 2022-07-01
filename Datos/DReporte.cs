@@ -36,5 +36,31 @@ namespace Datos
             }
             return obj_resultado;
         }
+        public List<EReporte_Categoria_Materiales> Obtener_Reporte_Categoria_Materiales(string fecha_inicio_reporte, string fecha_fin_reporte, string codigo_categoria, string codigo_producto, int tipo_reporte)
+        {
+            List<EReporte_Categoria_Materiales> obj_resultado;
+            try
+            {
+                using (SqlConnection cn = new DConexion().ConectarBD())
+                {
+                    cn.Open();
+                    obj_resultado = new List<EReporte_Categoria_Materiales>();
+
+                    var parameters = new DynamicParameters();
+                    parameters.Add("@fecha_inicio", fecha_inicio_reporte);
+                    parameters.Add("@fecha_fin", fecha_fin_reporte);
+                    parameters.Add("@codigo_categoria", codigo_categoria);
+                    parameters.Add("@codigo_producto", codigo_producto);
+                    parameters.Add("@tipo_reporte", tipo_reporte);
+
+                    obj_resultado = cn.Query<EReporte_Categoria_Materiales>("Obtener_Reporte_Categoria_Materiales", parameters, commandType: CommandType.StoredProcedure).ToList();
+                }
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+            return obj_resultado;
+        }
     }
 }

@@ -31,6 +31,10 @@
             reciclaje: '',
             EmpresaDescuentoReciclaje: '',
 
+            CategoriaReciclaje: '',
+            ProductoReciclaje: '',
+            TipoReporteMateriales: '',
+
             error: 'aa',
             mensaje: 'bb',
             //estilos_css default
@@ -41,6 +45,8 @@
             //listas
             listarEmpresaDescuentoReciclaje: [],
             ListarReporteUsuario: [],
+            listarCategorias: [],
+            listarProductos: [],
         }),
 
         created: function () {
@@ -51,7 +57,8 @@
             var vm = this;
             vm.tabla_jquery_reload_mount_reciclaje();
             vm.Listar_Empresa_Descuento();
-
+            vm.listar_Productos_Categorias();
+            vm.Listar_Categoria();
 
             $("#fecha_inicio_reporte").flatpickr({
                 dateFormat: "d/m/Y",
@@ -83,7 +90,6 @@
                         console.log(error);
                     });
             },
-
             Obtener_Reporte_Empresa_Descuento(evt) {
 
                 evt.preventDefault()
@@ -120,7 +126,6 @@
 
                 });
             },
-
             Exportar_Obtener_Reporte_Empresa_Descuento(evt) {
 
                 evt.preventDefault()
@@ -134,6 +139,119 @@
                             fecha_inicio_reporte: fecha_inicio_reporte1,
                             fecha_fin_reporte: fecha_fin_reporte1,
                             codigo_empresa_descuento: vm.EmpresaDescuentoReciclaje,
+
+                        })
+                            .then(function (response) {
+                                vm.descargaPDF(response.data.base64, response.data.nombrepdf)
+                                vm.tabla_jquery_reload_mount_reciclaje();
+                            })
+                            .catch(function (error) {
+                                console.log(error);
+                            });
+                    };
+                }).catch(function (error) {
+                    console.log(error);
+                    console.log(error.response.data.status);
+                    console.log(error.response.data.message);
+                    vm.error = error.response.data.status
+                    vm.mensaje = error.response.data.message
+                    //bootstrap.toast(document.querySelector('#errortoast')).show();
+                    $('.toast').toast({ animation: true, autohide: true, delay: 3000 });
+                    $('.toast').toast("show")
+
+                });
+            },
+            Listar_Categoria() {
+
+                var vm = this;
+
+                return axios.post('/Producto/Listar_Categorias', {
+                    params: {
+                    }
+                })
+                    .then(function (response) {
+                        vm.listarCategorias = response.data;
+
+                    })
+                    .catch(function (error) {
+                        console.log(error);
+                    });
+            },
+            listar_Productos_Categorias(valor) {
+
+                var vm = this;
+                if (!valor) {
+                    vm.bloquar_campo = true;
+                    vm.listarProductos = [];
+                    vm.producto = '';
+                } else {
+                    return axios.post('/Reciclaje/Listar_Producto_Categoria', {
+                        codigo_categoria: valor
+
+                    })
+                        .then(function (response) {
+                            vm.producto = '';
+                            vm.listarProductos = response.data;
+                            vm.bloquar_campo = false;
+                        })
+                        .catch(function (error) {
+                            console.log(error);
+                        });
+                }
+            },
+            Obtener_Reporte_Categoria_Materiales(evt) {
+
+                evt.preventDefault()
+                var vm = this;
+
+                vm.$validator.validateAll('formdatosreporte').then(function (result) {
+                    if (result) {
+                        const fecha_inicio_reporte1 = vm.fecha_inicio_reporte.split("/").reverse().join("");
+                        const fecha_fin_reporte1 = vm.fecha_fin_reporte.split("/").reverse().join("");
+                        return axios.post('/Reporte/Obtener_Reporte_Categoria_Materiales', {
+                            fecha_inicio_reporte: fecha_inicio_reporte1,
+                            fecha_fin_reporte: fecha_fin_reporte1,
+                            codigo_categoria: vm.CategoriaReciclaje,
+                            codigo_producto: vm.ProductoReciclaje,
+                            tipo_reporte: vm.TipoReporteMateriales,
+
+                        })
+                            .then(function (response) {
+                                vm.ListarReporteUsuario = response.data;
+                                vm.tabla_jquery_reload_mount_reciclaje();
+                                console.log(vm.ListarReporteUsuario);
+                            })
+                            .catch(function (error) {
+                                console.log(error);
+                            });
+                    };
+                }).catch(function (error) {
+                    console.log(error);
+                    console.log(error.response.data.status);
+                    console.log(error.response.data.message);
+                    vm.error = error.response.data.status
+                    vm.mensaje = error.response.data.message
+                    //bootstrap.toast(document.querySelector('#errortoast')).show();
+                    $('.toast').toast({ animation: true, autohide: true, delay: 3000 });
+                    $('.toast').toast("show")
+
+                });
+            },
+            Exportar_Obtener_Reporte_Categoria_Materiales(evt) {
+
+                evt.preventDefault()
+                var vm = this;
+
+                vm.$validator.validateAll('formdatosreporte').then(function (result) {
+                    if (result) {
+                        const fecha_inicio_reporte1 = vm.fecha_inicio_reporte.split("/").reverse().join("");
+                        const fecha_fin_reporte1 = vm.fecha_fin_reporte.split("/").reverse().join("");
+                        return axios.post('/Reporte/Exportar_Obtener_Reporte_Categoria_Materiales', {
+                            fecha_inicio_reporte: fecha_inicio_reporte1,
+                            fecha_fin_reporte: fecha_fin_reporte1,
+                            codigo_categoria: vm.CategoriaReciclaje,
+                            codigo_producto: vm.ProductoReciclaje,
+                            tipo_reporte: vm.TipoReporteMateriales,
 
                         })
                             .then(function (response) {
