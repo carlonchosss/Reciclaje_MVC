@@ -49,6 +49,7 @@
     <Compile Include="DAuthentication.cs" />
     <Compile Include="DProducto.cs" />
     <Compile Include="DReciclaje.cs" />
+    <Compile Include="DReporte.cs" />
     <Compile Include="DUsuario.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Utilidades\Encrypt.cs" />

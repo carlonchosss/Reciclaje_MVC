@@ -105,12 +105,12 @@ namespace Reciclaje_MVC.Controllers
 
                 if (existe_usuario)
                 {
-                    HttpContext.Response.StatusCode = (int)HttpStatusCode.BadRequest;
+                   // HttpContext.Response.StatusCode = (int)HttpStatusCode.BadRequest;
                     return new JsonResult { Data = new { status = "error", message = "Usuario Ya Existe" }, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
                 }
                 else
                 {
-                    HttpContext.Response.StatusCode = (int)HttpStatusCode.OK;
+                  //  HttpContext.Response.StatusCode = (int)HttpStatusCode.OK;
 
                     Utilidades.Encrypt Encrypt = new Utilidades.Encrypt();
                     obj.contrasenia = Encrypt.Encrypt_MD5(obj.contrasenia);

@@ -2294,6 +2294,7 @@
     <Content Include="VueJS\Modulos\RegistroUsuarioAdmin.js" />
     <Content Include="VueJS\Modulos\Modulos.js" />
     <Content Include="VueJS\Modulos\Accesos.js" />
+    <Content Include="VueJS\Modulos\Reporte.js" />
     <Content Include="VueJS\Modulos\Roles.js" />
     <Content Include="VueJS\vee-validate.js" />
     <Content Include="VueJS\vue.js" />
@@ -2321,11 +2322,11 @@
     <Content Include="Views\Cliente\Roles.cshtml" />
     <Content Include="Views\Cliente\Menu_Web.cshtml" />
     <Content Include="Views\Cliente\Acessos.cshtml" />
+    <Content Include="Views\Reporte\Reporte_Descuento.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Models\" />
-    <Folder Include="Views\Reporte\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
