@@ -55,17 +55,8 @@ namespace UnitTest_Reciclaje_MVC
             eUsuario.correo_electronico = "test_unit_1@test_unit_1.com";
 
             var response = controller.Crear_Usuario_por_Documento(eUsuario) as JsonResult;
-            var result = new RouteValueDictionary(response.Data);
 
-            if (result["message"].ToString() == "Usuario Ya Existe")
-            {
-                Assert.IsFalse(false);
-            }
-            else
-            {
-                Assert.IsTrue(true);
-
-            }
+            Assert.IsTrue(Convert.ToBoolean(response.Data));
         }
 
         [TestMethod]
@@ -82,12 +73,19 @@ namespace UnitTest_Reciclaje_MVC
             eUsuario.correo_electronico = "test_unit_1@test_unit_1.com";
 
             var response = controller.Crear_Usuario_por_Documento(eUsuario) as JsonResult;
-            var result = new RouteValueDictionary(response.Data);
 
-            if (result["message"].ToString() == "Usuario Ya Existe")
+            bool respuesta = false;
+
+            if (response.Data.Equals("error"))
             {
-                Assert.IsFalse(false);
+                respuesta = true;
             }
+            else
+            {
+                respuesta = false;
+            }
+
+            Assert.IsFalse(respuesta);
         }
 
         [TestMethod]

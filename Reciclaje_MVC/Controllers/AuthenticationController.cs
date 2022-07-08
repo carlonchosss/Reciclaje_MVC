@@ -114,7 +114,8 @@ namespace Reciclaje_MVC.Controllers
 
                     Utilidades.Encrypt Encrypt = new Utilidades.Encrypt();
                     obj.contrasenia = Encrypt.Encrypt_MD5(obj.contrasenia);
-                    var crear_usuario = nUsuario.crear_usuario_documento(obj);
+                    obj.codigo_perfil_usuario = 2;
+                    var crear_usuario = nUsuario.crear_usuario_sistema(obj);
 
                     return new JsonResult { Data = crear_usuario, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
                 }
