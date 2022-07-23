@@ -46,8 +46,8 @@ namespace UnitTest_Reciclaje_MVC
         {
             EUsuario eUsuario = new EUsuario();
             AuthenticationController controller = new AuthenticationController();
-            eUsuario.usuario = "test_unit_1";
-            eUsuario.contrasenia = "test_unit_1";
+            eUsuario.usuario = "test_unit_2";
+            eUsuario.contrasenia = "test_unit_2";
             eUsuario.nombre = "test_unit_nombre";
             eUsuario.apellido = "test_unit_apellido";
             eUsuario.celular = "999999999";
